@@ -1,0 +1,87 @@
+{% extends "main/mypage/base.html" %}
+
+{% block content %}
+
+<div class="content-detached ">
+    <div class="content-body">
+        <div id="wallet">
+            {% include 'main/simple_pagination.html' %}
+            <div class="wallet-table-th d-none d-md-block">
+                <div class="row">
+                    <div class="col-md-6 col-12 py-1">
+                        <p class="mt-0 text-capitalize">質問文</p>
+                    </div>
+                    <div class="col-md-2 col-12 py-1 text-center">
+                        <p class="mt-0 text-capitalize">質問者</p>
+                    </div>
+                    <div class="col-md-2 col-12 py-1 text-center">
+                        <p class="mt-0 text-capitalize">質問日</p>
+                    </div>
+                    <div class="col-md-2 col-12 py-1 text-center">
+                        <p class="mt-0 text-capitalize">返信・いいね数</p>
+                    </div>
+                </div>
+            </div>
+
+        {% for question in my_questions %}
+        <section class="card ">
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-6 col-12 py-1">
+                                <div class="media-body">
+                                    <h5 class="mt-0 text-capitalize">{{ question.title }}</h5>
+                                    <p class="text-muted mb-0 font-small-3 wallet-address">{{ question.body|truncatechars_html:100}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-12 py-1 text-center">
+                                <p class="text-muted mb-0 font-small-3">{{ question.author }}</p>
+                            </div>
+                            <div class="col-md-2 col-12 py-1 text-center">
+                                <p class="text-muted mb-0 font-small-3">{{ question.created_at | date:"Y/m/d H:i" }}</p>
+                            </div>
+                            <div class="col-md-2 col-12 py-1 text-center">
+                                {% include 'main/like.html' %}
+                                <a class=" btn btn-secondary mt-1 btn-block" href="{% url 'main:question' question.id %}">回答</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endfor %}
+
+        {% include 'main/simple_pagination.html' %}
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(event){
+        $(document).on('click', '#like', function(event){
+            event.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'main:like' %}",
+                data: {
+                    'question_id': $(this).attr('name'),
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType: 'json',
+                success: function(response){
+                    selector = document.getElementsByName(response.question_id);
+                    if(response.liked){
+                        $(selector).html("<i class='fas fa-thumbs-up fa-lg'></i>");
+                    }
+                    else {
+                        $(selector).html("<i class='far fa-thumbs-up fa-lg'></i>");
+                    }
+                    selector2 = document.getElementsByName(response.question_id + "-count");
+                    $(selector2).text(response.count);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

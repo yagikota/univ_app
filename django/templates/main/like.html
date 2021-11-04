@@ -1,0 +1,11 @@
+<div class="d-flex justify-content-center">
+    <form action="{% url 'main:like' %}" method="POST">
+        {% csrf_token %}
+        {% if question.id in liked_list %}
+        <button id="like" name="{{question.id}}" style="outline: none; border-style: none" class="bg-white"><i class="fas fa-thumbs-up fa-lg"></i></button>
+        {% else %}
+        <button id="like" name="{{question.id}}" style="outline: none; border-style: none" class="bg-white"><i class="far fa-thumbs-up fa-lg"></i></button>
+        {% endif %}
+    </form>
+    <span name="{{question.id}}-count" class="count my-auto pl-1"> {{ question.likes.count }} </span>
+</div>

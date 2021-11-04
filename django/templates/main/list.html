@@ -1,0 +1,179 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css_framework/app-assets/css/pages/wallet.css' %}">
+{% endblock header %}
+
+{% block body %}
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-header row">
+                <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+                    <h3 class="content-header-title mb-0 d-inline-block">質問一覧</h3>
+                    <div class="row breadcrumbs-top d-inline-block">
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'main:top_page' %}">Toppage</a>
+                                </li>
+                                <li class="breadcrumb-item active">質問一覧
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
+                    <div class="btn-group float-md-right"><a class="btn-gradient-primary white" href="{% url 'main:new_question' %}">質問する</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="content-body">
+                        <div id="wallet">
+                            {% include 'main/simple_pagination.html' %}
+                            <div class="wallet-table-th d-none d-md-block">
+                                <div class="row">
+                                    <div class="col-md-6 col-12 py-1">
+                                        <p class="mt-0 text-capitalize text-center">質問文</p>
+                                    </div>
+                                    <div class="col-md-2 col-12 py-1 text-center">
+                                        <p class="mt-0 text-capitalize">質問者</p>
+                                    </div>
+                                    <div class="col-md-2 col-12 py-1 text-center">
+                                        <p class="mt-0 text-capitalize">質問日</p>
+                                    </div>
+                                    <div class="col-md-2 col-12 py-1 text-center">
+                                        <p class="mt-0 text-capitalize">返信・いいね数</p>
+                                    </div>
+                                </div>
+                            </div>
+        
+                        {% for question in questions %}
+                            <section class="card ">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-md-6 col-12 py-1">
+                                                    <div class="media-body">
+                                                        <h5 class="mt-0 text-capitalize">{{ question.title }}</h5>
+                                                        <p class="text-muted mb-0 font-small-3 wallet-address">{{ question.body|truncatechars_html:100}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-12 py-1 text-center">
+                                                    <p class="text-muted mb-0 font-small-3">{{ question.author }}</p>
+                                                </div>
+                                                <div class="col-md-2 col-12 py-1 text-center">
+                                                    <p class="text-muted mb-0 font-small-3">{{ question.created_at | date:"Y/m/d H:i" }}</p>
+                                                </div>
+                                                <div class="col-md-2 col-12 py-1 text-center">
+                                                    {% include 'main/like.html' %}
+                                                    <a class=" btn btn-secondary mt-1 btn-block" href="{% url 'main:question' question.id %}">回答</a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        {% endfor %}
+                        {% include 'main/simple_pagination.html' %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="card-title text-center">ICO Tokens</h6>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+                                <div class="text-center row clearfix mb-2">
+                                    <div class="col-12">
+                                        <i class="icon-layers font-large-3 bg-warning bg-glow white rounded-circle p-3 d-inline-block"></i>
+                                    </div>
+                                </div>
+                                <h3 class="text-center">3,458.88 CIC</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-de mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td>CIC Token</td>
+                                            <td><i class="icon-layers"></i> 3,258 CIC</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CIC Referral</td>
+                                            <td><i class="icon-layers"></i> 200.88 CIC</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CIC Price</td>
+                                            <td><i class="cc BTC-alt"></i> 0.0001 BTC</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Raised BTC</td>
+                                            <td><i class="cc BTC-alt"></i> 2154 BTC</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Raised USD</td>
+                                            <td><i class="la la-dollar"></i> 4.52 M</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title text-center">Token sale progress</h6>            
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="font-small-3 clearfix">
+                                <span class="float-left">$0</span>
+                                <span class="float-right">$5M</span>
+                            </div>
+                            <div class="progress progress-sm my-1 box-shadow-2">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="font-small-3 clearfix">
+                                <span class="float-left">Distributed <br> <strong>6,235,125 CIC</strong></span>
+                                <span class="float-right text-right">Contributed  <br> <strong>5478 ETH | 80 BTC</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- いいねの処理 -->
+    <script type="text/javascript">
+        $(document).ready(function(event){
+            $(document).on('click', '#like', function(event){
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'main:like' %}",
+                    data: {
+                        'question_id': $(this).attr('name'),
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    dataType: 'json',
+                    success: function(response){
+                        selector = document.getElementsByName(response.question_id);
+                        if(response.liked){
+                            $(selector).html("<i class='fas fa-thumbs-up fa-lg'></i>");
+                        }
+                        else {
+                            $(selector).html("<i class='far fa-thumbs-up fa-lg'></i>");
+                        }
+                        selector2 = document.getElementsByName(response.question_id + "-count");
+                        $(selector2).text(response.count);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock body%}

@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- BEGIN GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i|Comfortaa:300,400,500,700" rel="stylesheet">
+    <!-- END GOOGLE FONTS -->
+    <!-- BEGIN VENDOR CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css_framework/app-assets/css/vendors.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css_framework/app-assets/vendors/css/charts/chartist.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css_framework/app-assets/vendors/css/charts/chartist-plugin-tooltip.css' %}">
+    <!-- END VENDOR CSS-->
+    <!-- BEGIN MODERN CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css_framework/app-assets/css/app.css' %}">
+    <!-- END MODERN CSS-->
+    <!-- BEGIN Page Level CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css_framework/app-assets/css/core/menu/menu-types/vertical-compact-menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css_framework/app-assets/vendors/css/cryptocoins/cryptocoins.css' %}">
+    <link rel="stylesheet" type="text/css" href="(% static 'css_framework/app-assets/css/pages/timeline.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css_framework/app-assets/css/pages/dashboard-ico.css' %}">
+    <!-- END Page Level CSS-->
+    <!-- BEGIN Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css_framework/assets/css/style.css' %}">
+    <!-- END Custom CSS-->
+    <!-- BEGIN FontAwesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <!-- END fontawesome -->
+</head>
+<body>
+    <div class="row m-5">
+        <div class="col-xl-6 mt-5">
+            <h1 class="text-center">
+                <div>府大生専用のQ&Aサイト</div>
+                <div class="mt-1">府大賢者</div>
+            </h1>
+            <p class="text-center mt-3">
+                大学生活を送る中で困ったこと、疑問に思ったことなどあれば気軽に質問してください。<br>
+                きっと、良いアドバイスがもらえるでしょう。
+            </p>
+            <div class=" row text-center justify-content-center my-5">
+                <a class="btn-gradient-primary white col-xs-2 col-xl-3 m-1" href="{% url 'account_login' %}">ログイン</a>
+                <a class="btn-gradient-primary white col-xs-2 col-xl-3 m-1" href="{% url 'account_signup' %}">無料登録</a>
+            </div>
+        </div>
+
+        <div class=" col-xl-6">
+            <img src="{% static 'css/images/landing_page_illust.svg' %}" alt="landing_page_illust" class="w-70 h-70">
+        </div>
+    </div>
+</body>
+</html>

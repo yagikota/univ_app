@@ -1,0 +1,8 @@
+<ul class="list-group">
+    <a href="{% url 'main:profile' %}" class="list-group-item" style="text-decoration: none;">プロフィール</a>
+    <a href="{% url 'main:my_q_list' %}" class="list-group-item" style="text-decoration: none;">自分の質問</a>
+    <a href="{% url 'main:liked_list' %}" class="list-group-item" style="text-decoration: none;">いいねした質問</a>
+    <a href="{% url 'account_set_password' %}" class="list-group-item" style="text-decoration: none;">パスワードの変更</a>
+    <a href="{% url 'account_logout' %}" class="list-group-item" style="text-decoration: none;">ログアウト</a>
+    <a href="{% url 'main:delete_confirm' %}" class="list-group-item" style="text-decoration: none;">退会</a>
+</ul>

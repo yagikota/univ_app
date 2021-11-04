@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body_wrapper %}
+    <body class="vertical-layout vertical-compact-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-compact-menu" data-col="2-columns">
+        <!-- BEGIN fixed-top-->
+        <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
+            <div class="navbar-wrapper">
+                <div class="navbar-header d-md-none">
+                    <ul class="nav navbar-nav flex-row">
+                        <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
+                        <li class="nav-item d-md-none"><a class="navbar-brand" href="index.html"><img class="brand-logo d-none d-md-block" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"><img class="brand-logo d-sm-block d-md-none" alt="CryptoDash admin logo sm" src="../../../app-assets/images/logo/logo-sm.png"></a></li>
+                        <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v">   </i></a></li>
+                    </ul>
+                </div>
+                <div class="navbar-container">
+                    <div class="collapse navbar-collapse" id="navbar-mobile">
+                        <ul class="nav navbar-nav mr-auto float-left">
+                            <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu">         </i></a></li>
+                            <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a>
+                                <div class="search-input">
+                                    <input class="input" type="text" placeholder="Explore CryptoDash...">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- END fixed-top-->
+        <!-- BEGIN menu-->
+        <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
+            <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="{% url 'main:top_page' %}"><img class="brand-logo" alt="CryptoDash admin logo" src="{% static 'css_framework/app-assets/images/logo/logo.png' %}"/></a>
+                <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                    <li class=" nav-item">
+                        <a href="{% url 'main:top_page' %}">
+                            <i class="fas fa-home"></i>
+                            <span class="menu-title" data-i18n="">トップページ</span>
+                        </a>
+                    </li>
+                    <li class=" nav-item">
+                        <a href="{% url 'main:list' %}">
+                            <i class="fas fa-list"></i>
+                            <span class="menu-title" data-i18n="">質問一覧</span>
+                        </a>
+                    </li>
+                    <li class=" nav-item"><a href="{% url 'main:profile' %}"><i class="fas fa-user"></i><span class="menu-title" data-i18n="">アカウント</span></a>
+                        <ul class="menu-content">
+                            <li><a class="menu-item" href="{% url 'main:profile' %}">マイページ</a></li>
+                            <li><a class="menu-item" href="{% url 'account_logout' %}">ログアウト</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- END menu-->
+        
+        {% block body %}
+        {% endblock body%}
+
+        <footer class="footer footer-static footer-transparent">
+            <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright  &copy; <script>
+                document.write(new Date().getFullYear())
+            </script> <a class="text-bold-800 grey darken-2" href="https://themeselection.com/" target="_blank">ThemeSelection </a>, All rights reserved. </span><span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">Hand-crafted & Made with <i class="ft-heart pink"></i></span></p>
+        </footer>
+
+    </body>
+{% endblock body_wrapper %}

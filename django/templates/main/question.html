@@ -1,0 +1,144 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+            <h3 class="content-header-title mb-0 d-inline-block">質問する</h3>
+            <div class="row breadcrumbs-top d-inline-block">
+                <div class="breadcrumb-wrapper col-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'main:top_page' %}">Toppage</a>
+                    </li>
+                    <li class="breadcrumb-item active">質問する
+                    </li>
+                </ol>
+                </div>
+            </div>
+            </div>
+            <div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
+            <div class="btn-group float-md-right"><a class="btn-gradient-primary white" href="{% url 'main:new_question' %}">質問する</a></div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="page question-page">
+                        <div class="card">
+                            <!-- 質問内容 -->
+                            <div class="card-body pb-0">
+                                <div class="card-header p-0">
+                                    <span class="question-author">{{question.author.username}} {{ question.created_at | date:"Y/m/d H:i" }}</span>
+                                </div>
+                                <div class="cart-title mt-1">
+                                    <h4>{{question.title}}</h4>
+                                </div>
+                                <div class="card-text mt-2">
+                                    <p class="question-body">{{question.body}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 回答送信form -->
+                        {% if user.is_authenticated %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <form method="POST" class="response-form m-0 p-0">{% csrf_token %}
+                                        <div class="fieldWrapper">
+                                            {{response_form.body }}
+                                        </div>
+                                        <button type="submit" class="btn btn-lg btn-secondary btn-block my-1">回答</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <!-- 返信を表示 -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="cart-title">
+                                    <h4 class="">回答一覧</h4>
+                                </div>
+                                {% if not question.responses.all %}
+                                    <p class="">No responses yet</p>
+                                {% else %}
+                                    {% for response in question.get_responses %}
+                                        {% include 'main/response.html' with response=response %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title text-center">ICO Tokens</h6>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="text-center row clearfix mb-2">
+                                <div class="col-12">
+                                    <i class="icon-layers font-large-3 bg-warning bg-glow white rounded-circle p-3 d-inline-block"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-center">3,458.88 CIC</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-de mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td>CIC Token</td>
+                                        <td><i class="icon-layers"></i> 3,258 CIC</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CIC Referral</td>
+                                        <td><i class="icon-layers"></i> 200.88 CIC</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CIC Price</td>
+                                        <td><i class="cc BTC-alt"></i> 0.0001 BTC</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Raised BTC</td>
+                                        <td><i class="cc BTC-alt"></i> 2154 BTC</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Raised USD</td>
+                                        <td><i class="la la-dollar"></i> 4.52 M</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                <div class="card-header">
+                    <h6 class="card-title text-center">Token sale progress</h6>            
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <div class="font-small-3 clearfix">
+                            <span class="float-left">$0</span>
+                            <span class="float-right">$5M</span>
+                        </div>
+                        <div class="progress progress-sm my-1 box-shadow-2">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="font-small-3 clearfix">
+                            <span class="float-left">Distributed <br> <strong>6,235,125 CIC</strong></span>
+                            <span class="float-right text-right">Contributed  <br> <strong>5478 ETH | 80 BTC</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/javascript.js' %}" type="text/javascript"></script>
+{% endblock body %}

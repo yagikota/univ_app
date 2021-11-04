@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    {% block head_title %}{% endblock head_title %}
+    {% block extra_head %}{% endblock extra_head %}
+{% endblock header %}
+
+{% block body_wrapper %}
+<body>
+    {% block body %}
+        {% block content %}{% endblock content %}
+    {% endblock body %}
+
+    {% block extra_body %}{% endblock %}
+</body>
+{% endblock body_wrapper %}
+

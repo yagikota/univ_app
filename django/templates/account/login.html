@@ -1,0 +1,40 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load widget_tweaks %}
+
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+    <div class="col-xl-4 col-lg-6 col-md-7  col-12 m-auto">
+        <div class="card border-grey border-lighten-3 m-0 box-shadow-0 card-account-right h-auto">                
+            <div class="card-content m-0">                    
+                <div class="card-body p-3">
+                    <h1 class="text-center">{% trans "Sign In" %}</h1>
+                    <form class="login form-horizontal form-signin" method="POST" action="{% url 'account_login' %}">{% csrf_token %}
+                        <div style="width: 70%; margin: auto">
+                            {{ form.non_field_errors }}
+                                {% for field in form %}
+                                {{ field.label_tag }}
+                                {{ field | add_class:'form-control'}}
+                                {{ field.errors }}
+                                <hr>
+                            {% endfor %}
+                        </div>
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <div class="col-12  text-center">
+                            <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                        </div>
+                        <button class="primaryAction btn-gradient-primary btn-block my-1" type="submit">{% trans "Sign In" %}</button>
+                    <p class="text-center"><a href="{% url 'account_signup' %}" class="card-link">ユーザー登録</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends 'base_centered.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="col-xl-4 col-lg-6 col-md-7  col-12 m-auto">
+    <div class="card border-grey border-lighten-3 m-0 box-shadow-0 card-account-right height-500">                
+        <div class="card-content m-0">                    
+            <div class="card-body p-3">
+                <p class="text-center h5 text-capitalize">Welcome to 府大賢者!</p>
+                <p class="mb-3 text-center">Please enter your login details</p>
+                <form action="" method="POST" class="form-horizontal form-signin">
+                    <div style="width: 70%; margin: auto">
+                        {{ form.non_field_errors }}
+                        {% for field in form %}
+                        {{ field.label_tag }}<br>
+                        {{ field | add_class:'form-control'}}
+                        {{ field.errors }}
+                        <hr>
+                        {% endfor %}
+                    </div>
+                    {% csrf_token %}
+                    <div class=" col-12  text-center "><a href="{% url 'password_reset' %}">パスワードをお忘れですか?</a></div>
+                    <button type="submit" class="btn-gradient-primary btn-block my-1">ログイン</button>
+                    <p class="text-center"><a href="{% url 'main:signup' %}" class="card-link">無料登録</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+
+{% endblock content %}

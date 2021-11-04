@@ -1,0 +1,8 @@
+{% extends "main/mypage/base.html" %}
+
+{% block content %}
+
+    <p>アカウントを削除します。よろしいですか?</p>
+    <a class="btn btn-danger" href="{% url 'main:delete_complete' %}">はい</a>
+
+{% endblock %}

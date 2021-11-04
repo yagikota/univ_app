@@ -1,0 +1,26 @@
+{% extends "main/mypage/base.html" %}
+
+{% block content %}
+
+    <table class="table borderless">
+        <tbody>
+        <tr>
+            <th scope="row">ユーザー名</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th scope="row">メール</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th scope="row">最終ログイン日時</th>
+            <td>{{ user.last_login }}</td>
+        </tr>
+        <tr>
+            <th scope="row">入会日</th>
+            <td>{{ user.date_joined }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+{% endblock content %}
