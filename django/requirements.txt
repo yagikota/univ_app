@@ -1,12 +1,12 @@
 asgiref==3.4.1
 beautifulsoup4==4.10.0
 certifi==2021.10.8
-cffi==1.15.0
+# cffi
 charset-normalizer==2.0.7
-cryptography==35.0.0
+cryptography
 defusedxml==0.7.1
 Django==3.2.9
-django-allauth==0.45.0
+django-allauth
 django-bootstrap4==21.1
 django-pure-pagination==0.3.0
 django-widget-tweaks==1.4.9
@@ -21,3 +21,4 @@ requests-oauthlib==1.3.0
 soupsieve==2.3
 sqlparse==0.4.2
 urllib3==1.26.7
+psycopg2-binary
