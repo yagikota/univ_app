@@ -8,12 +8,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '-p#udqdkhhb%x^6fu1t7@=2^*-smixzpi52*dmu+9fql6h&5+i'
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = '-p#udqdkhhb%x^6fu1t7@=2^*-smixzpi52*dmu+9fql6h&5+i'
+# SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
-# DEBUG = True
 DEBUG = os.environ.get("DEBUG")
 
 # ALLOWED_HOSTS = ["fudai-kenja.com"]
@@ -97,6 +95,7 @@ DATABASES = {
         'PORT': os.environ.get("SQL_PORT"),
     }
 }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -143,7 +142,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -176,3 +176,5 @@ PAGINATION_SETTINGS = {
 }
 
 AUTH_USER_MODEL = 'main.User'
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
