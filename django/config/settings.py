@@ -8,15 +8,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-p#udqdkhhb%x^6fu1t7@=2^*-smixzpi52*dmu+9fql6h&5+i'
-# SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG")
+DEBUG = os.getenv("DEBUG")
 
 # ALLOWED_HOSTS = ["fudai-kenja.com"]
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.get.env("ALLOWED_HOSTS").split(" ")
 # Application definition
 
 INSTALLED_APPS = [
@@ -70,20 +69,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'fudai_kenja_db',
-#         'USER': 'kotayagi',
-#         'PASSWORD': 'aullfetalflchemist',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
 
 DATABASES = {
     'default': {
