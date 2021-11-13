@@ -21,17 +21,31 @@ services:
     env_file:
       - ./.env.dev
 
-  nginx:
-    build: ./nginx
-    volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
+  https-portal:
+    image: steveltn/https-portal:1
     ports:
-        - "1317:80"
+      - '80:80'
+      - '443:443'
+    environment:
+      DOMAINS: 'fudai-kenja.com'
+      # STAGE: 'production' # Don't use production until staging works
+    volumes:
+      - https-portal-data:/var/lib/https-portal
     depends_on:
-        - web 
+        - web
+
+  # nginx:
+  #   build: ./nginx
+  #   volumes:
+  #     - static_volume:/home/app/web/static
+  #     - media_volume:/home/app/web/media
+  #   ports:
+  #       - "1317:80"
+  #   depends_on:
+  #       - web
 
 volumes:
   postgres_data:
   static_volume:
   media_volume:
+  https-portal-data:
