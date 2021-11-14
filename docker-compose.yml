@@ -3,6 +3,7 @@ version: "3.8"
 services:
   web:
     build: ./django
+    # command: python manage.py runserver 0.0.0.0:8000
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/static
@@ -15,37 +16,39 @@ services:
       - db
 
   db:
-    image: postgres:12.0-alpine
+    image: postgres:alpine3.14
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.dev
 
-  https-portal:
-    image: steveltn/https-portal:1
-    ports:
-      - '80:80'
-      - '443:443'
-    environment:
-      DOMAINS: 'fudai-kenja.com'
-      # STAGE: 'production' # Don't use production until staging works
-    volumes:
-      - https-portal-data:/var/lib/https-portal
-    depends_on:
-        - web
-
-  # nginx:
-  #   build: ./nginx
+  # https-portal:
+  #   image: steveltn/https-portal:1
+  #   ports:
+  #     - '80:80'
+  #     - '443:443'
+  #   environment:
+  #     DOMAINS: 'fudai-kenja.com'
+  #     # STAGE: 'production' # Don't use production until staging works
   #   volumes:
+  #     - https-portal-data:/var/lib/https-portal
   #     - static_volume:/home/app/web/static
   #     - media_volume:/home/app/web/media
-  #   ports:
-  #       - "1317:80"
   #   depends_on:
   #       - web
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    ports:
+        - "1317:80"
+    depends_on:
+        - web
 
 volumes:
   postgres_data:
   static_volume:
   media_volume:
-  https-portal-data:
+  # https-portal-data:
