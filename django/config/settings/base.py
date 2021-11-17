@@ -1,22 +1,17 @@
 from pathlib import Path
+import environ
 import os
 
+# 環境変数設定
+env = environ.Env()
+env.read_env('.env')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.getenv("SECRET_KEY")
-
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv("DEBUG")
-
-# ALLOWED_HOSTS = ["fudai-kenja.com"]
-# ALLOWED_HOSTS = ["*"]
-# ALLOWED_HOSTS = os.get.env("ALLOWED_HOSTS").split(" ")
 # Application definition
 
 INSTALLED_APPS = [
@@ -71,15 +66,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get("SQL_DATABASE"),
+#         'USER': os.environ.get("SQL_USER"),
+#         'PASSWORD': os.environ.get("SQL_PASSWORD"),
+#         'HOST': os.environ.get("SQL_HOST"),
+#         'PORT': os.environ.get("SQL_PORT"),
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get("SQL_DATABASE"),
-        'USER': os.environ.get("SQL_USER"),
-        'PASSWORD': os.environ.get("SQL_PASSWORD"),
-        'HOST': os.environ.get("SQL_HOST"),
-        'PORT': os.environ.get("SQL_PORT"),
-    }
+    'default': env.db(),
 }
 
 # Password validation
