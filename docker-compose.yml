@@ -8,8 +8,10 @@ services:
     volumes:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
-    expose:
-      - "8000"
+    # expose:
+    #   - "8000"
+    ports:
+    - 8000:8000
     # env_file:
     #   - ./.env
     depends_on:
@@ -22,20 +24,19 @@ services:
     env_file:
       - ./.env
 
-  # https-portal:
-  #   image: steveltn/https-portal:1
-  #   ports:
-  #     - '80:80'
-  #     - '443:443'
-  #   environment:
-  #     DOMAINS: 'fudai-kenja.com'
-  #     # STAGE: 'production' # Don't use production until staging works
-  #   volumes:
-  #     - https-portal-data:/var/lib/https-portal
-  #     - static_volume:/home/app/web/static
-  #     - media_volume:/home/app/web/media
-  #   depends_on:
-  #       - web
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: always
+    environment:
+      STAGE: 'local'
+      DOMAINS: 'localhost -> http://nginx:1317'
+    volumes:
+      - https-portal-data:/var/lib/https-portal
+    depends_on:
+        - web
 
   nginx:
     build: ./nginx
@@ -51,4 +52,4 @@ volumes:
   postgres_data:
   static_volume:
   media_volume:
-  # https-portal-data:
+  https-portal-data:
