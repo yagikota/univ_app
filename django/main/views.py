@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as auth_logout
-from django.views.generic import ListView, TemplateView, View
+from django.views.generic import ListView, TemplateView, View, CreateView
 from .models import Question, Response, Likes
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,6 +12,7 @@ from django.shortcuts import get_object_or_404, render
 from django.db.models import Count
 from django.urls import reverse_lazy
 from allauth.account.views import PasswordChangeView
+from django.contrib import messages
 # Create your views here.
 User = get_user_model()
 
@@ -182,24 +183,36 @@ delete_user_complete = DeleteUserCompleteView.as_view()
 
 
 # 質問する時の処理
-def new_question_page(request):
-    form = NewQuestionForm()
+class PostQuestionView(LoginRequiredMixin, CreateView):
+    # model = Question
+    form_class = NewQuestionForm
+    success_url = reverse_lazy('main:new_question')
 
-    if request.method == 'POST':
-        try:
-            form = NewQuestionForm(request.POST)
-            if form.is_valid():
-                question = form.save(commit=False)
-                question.author = request.user
-                question.save()
+    def form_valid(self, form):
+        messages.info(self.request, '質問を投稿しました。')
+        print("aaaaaa")
 
-        except Exception as e:
-            print(e)
-            raise
+post_question = PostQuestionView.as_view()
 
-    context = {'form': form}
+# def new_question_page(request):
+#     form = NewQuestionForm()
 
-    return render(request, 'main/comment_create.html', context)
+#     if request.method == 'POST':
+#         try:
+#             form = NewQuestionForm(request.POST)
+#             if form.is_valid():
+#                 question = form.save(commit=False)
+#                 question.author = request.user
+#                 question.save()
+#         except Exception as e:
+#             messages.error(request, e)
+
+#     context = {
+#         'form': form,
+#         'messages': messages,
+#     }
+
+#     return render(request, 'main/comment_create.html', context)
 
 # 質問への返信の処理
 def question_page(request, id):
