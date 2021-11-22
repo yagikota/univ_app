@@ -27,6 +27,14 @@
             <div class="content-body">
                 <div class="row">
                     <div class="col-12 col-md-8">
+                        {{messages}}
+                        {% if messages %}
+                            <ul class="list-unstyled">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
                         <section class="card">
                             {% if message %}
                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
