@@ -11,7 +11,7 @@
 
         {% for page in page_obj.pages %}
             {% if page %}
-                {% ifequal page page_obj.number %}
+                {% if page == page_obj.number %}
                 <li class="page-item active">
                     <span class="current page page-link ">{{ page }}</span>
                 </li>
@@ -19,7 +19,7 @@
                 <li class="page-item">
                     <a href="?{{ page.querystring }}" class="page page-link">{{ page }}</a>
                 </li>
-                {% endifequal %}
+                {% endif %}
             {% else %}
             <li class="page-item">&hellip;</li>
             {% endif %}
