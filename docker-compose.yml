@@ -3,8 +3,8 @@ version: "3.8"
 services:
   web:
     build: ./django
-    # command: python manage.py runserver 0.0.0.0:8000
-    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
+    # command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
@@ -24,19 +24,19 @@ services:
     env_file:
       - ./.env
 
-  https-portal:
-    image: steveltn/https-portal:1
-    ports:
-      - '80:80'
-      - '443:443'
-    restart: always
-    environment:
-      STAGE: 'local'
-      DOMAINS: 'localhost -> http://nginx:1317'
-    volumes:
-      - https-portal-data:/var/lib/https-portal
-    depends_on:
-        - web
+  # https-portal:
+  #   image: steveltn/https-portal:1
+  #   ports:
+  #     - '80:80'
+  #     - '443:443'
+  #   restart: always
+  #   environment:
+  #     STAGE: 'local'
+  #     DOMAINS: 'localhost -> http://nginx:1317'
+  #   volumes:
+  #     - https-portal-data:/var/lib/https-portal
+  #   depends_on:
+  #       - web
 
   nginx:
     build: ./nginx

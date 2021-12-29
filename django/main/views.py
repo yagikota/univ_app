@@ -13,6 +13,7 @@ from django.db.models import Count
 from django.urls import reverse_lazy
 from allauth.account.views import PasswordChangeView
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 # Create your views here.
 User = get_user_model()
 
@@ -38,6 +39,7 @@ class QuestionListView(LoginRequiredMixin, PaginationMixin, ListView):
 
     def get_queryset(self):
         sort_order = self.request.GET.get('sort_order')
+        print(sort_order)
         if sort_order == 'date_desc':
             return Question.objects.order_by('-created_at')
         elif sort_order == 'date_asc':
@@ -183,14 +185,30 @@ delete_user_complete = DeleteUserCompleteView.as_view()
 
 
 # 質問する時の処理
-class PostQuestionView(LoginRequiredMixin, CreateView):
+class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    template_name = 'main/comment_create.html'
     # model = Question
     form_class = NewQuestionForm
     success_url = reverse_lazy('main:new_question')
+    success_message = "質問を投稿しました。"
 
     def form_valid(self, form):
-        messages.info(self.request, '質問を投稿しました。')
-        print("aaaaaa")
+        # https://docs.djangoproject.com/ja/4.0/topics/class-based-views/generic-editing/#models-and-request-user
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_form(self, form_class=None):
+        """Return an instance of the form to be used in this view."""
+        if form_class is None:
+            form_class = self.get_form_class()
+        
+        return form_class(**self.get_form_kwargs())
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = NewQuestionForm()
+        return context
 
 post_question = PostQuestionView.as_view()
 
