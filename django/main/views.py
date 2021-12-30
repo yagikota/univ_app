@@ -14,6 +14,10 @@ from django.urls import reverse_lazy
 from allauth.account.views import PasswordChangeView
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
+from functools import reduce
+from operator import and_
+
 # Create your views here.
 User = get_user_model()
 
@@ -37,20 +41,43 @@ class QuestionListView(LoginRequiredMixin, PaginationMixin, ListView):
     context_object_name = 'questions'
     paginate_by = 3
 
+    # 検索の処理 改善の余地あり
+    def search(self, model_obj, sort_order):
+        sort_type = {
+        'date_desc': '質問日時の新しい順',
+        'date_asc': '質問日時の古い順',
+        'ans_desc': '回答数の多い順',
+        'ans_asc': '回答数の少ない順',
+        'likes_desc': 'いいねの多い順',
+        }
+        keyword = self.request.GET.get('keyword')
+
+        if keyword:
+            keyword = keyword.replace(' ', '').replace('　', '')
+            # print([Q(title__icontains=char) | Q(body__icontains=char) for char in keyword])
+            query = reduce(and_, [Q(title__icontains=char) | Q(body__icontains=char) for char in keyword])
+            # print(query)
+            # print(type(query))
+            model_obj = model_obj.filter(query)
+            # print(model_obj)
+            # model_obj = model_obj.filter(Q(title__icontains=char) | Q(body__icontains=char))
+            messages.success(self.request, '「{0}」の検索結果 {1}'.format(keyword, sort_type[sort_order]))
+        return model_obj
+
     def get_queryset(self):
         sort_order = self.request.GET.get('sort_order')
-        print(sort_order)
         if sort_order == 'date_desc':
-            return Question.objects.order_by('-created_at')
+            return self.search(Question.objects.order_by('-created_at'), sort_order)
         elif sort_order == 'date_asc':
-            return Question.objects.order_by('created_at')
+            return self.search(Question.objects.order_by('created_at'), sort_order)
         elif sort_order == 'ans_desc':
-            return Question.objects.annotate(num_responses=Count('responses')).order_by('-num_responses')
+            return self.search(Question.objects.annotate(num_responses=Count('responses')).order_by('-num_responses'), sort_order)
         elif sort_order == 'ans_asc':
-            return Question.objects.annotate(num_responses=Count('responses')).order_by('num_responses')
+            return self.search(Question.objects.annotate(num_responses=Count('responses')).order_by('num_responses'), sort_order)
+        elif sort_order == 'likes_desc':
+            return self.search(Question.objects.annotate(num_likes=Count('likes')).order_by('-num_likes'), sort_order)
         else:
-            return Question.objects.annotate(num_likes=Count('likes')).order_by('-num_likes')
-
+            return self.search(Question.objects.order_by('-created_at'), sort_order)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -193,6 +220,7 @@ class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = "質問を投稿しました。"
 
     def form_valid(self, form):
+        # 重要
         # https://docs.djangoproject.com/ja/4.0/topics/class-based-views/generic-editing/#models-and-request-user
         form.instance.author = self.request.user
         return super().form_valid(form)
