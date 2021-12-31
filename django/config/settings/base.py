@@ -65,7 +65,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+# WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -142,6 +142,8 @@ ACCOUNT_MAX_EMAIL_ADDRESSES = 2
 ACCOUNT_USERNAME_MIN_LENGTH = 3
 ACCOUNT_ADAPTER = 'main.adapter.ExtendedAccountAdapter'
 
+# Django 4.0から必要
+CSRF_TRUSTED_ORIGINS = ['http://localhost:1317','https://*']
 
 PAGINATION_SETTINGS = {
     'PAGE_RANGE_DISPLAYED': 2,

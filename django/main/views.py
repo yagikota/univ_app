@@ -155,7 +155,7 @@ liked_question_list = LikedQuestionListView.as_view()
 class MyQuestionListView(LoginRequiredMixin, PaginationMixin, ListView):
     template_name = 'main/mypage/my_question_list.html'
     context_object_name = 'my_questions'
-    paginate_by = 3
+    paginate_by = 1
 
     # 自分がした質問のquerysetを取得
     def get_queryset(self):
