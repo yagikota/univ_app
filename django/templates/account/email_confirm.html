@@ -8,34 +8,35 @@
 
 {% block content %}
 
-<div class="col-xl-4 col-lg-6 col-md-7  col-12 m-auto">
-    <div class="card border-grey border-lighten-3 m-0 box-shadow-0 card-account-right height-auto">                
-        <div class="card-content m-0">                    
-            <div class="card-body p-3">
-                <h1 class="text-center">{% trans "Confirm E-mail Address" %}</h1>
+
+<div class="flex w-full max-w-5xl mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+    <div class="flex items-center justify-center w-24 bg-blue-400">
+        <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z"/>
+        </svg>
+    </div>
+    
+    <div class="px-4 py-2 -mx-3">
+        <div class="mx-3">
+            <span class="font-semibold text-blue-400">{% trans "Confirm E-mail Address" %}</span>
+            <p class="text-sm text-gray-600 dark:text-gray-200">
                 {% if confirmation %}
-                
                     {% user_display confirmation.email_address.user as user_display %}
-                
-                    <p class="text-center">{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endblocktrans %}</p>
-                
-                    <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                    <p class="text-center">
+                        {% blocktrans with confirmation.email_address.email as email %}
+                        <strong><a href="mailto:{{ email }}">{{ email }}</a></strong>がユーザー<strong>{{ user_display }}</strong>のものであることを認証して下さい。
+                        {% endblocktrans %}
+                    </p>
+                    <form  class="mt-4"method="post" action="{% url 'account_confirm_email' confirmation.key %}">
                     {% csrf_token %}
-                        <button type="submit" class="btn-gradient-primary my-1 btn-block">{% trans 'Confirm' %}</button>
+                        <button type="submit" class="inline-flex items-center justify-center mt-6 px-4 py-2 bg-blue-400 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-blue-500 active:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 disabled:opacity-25 transition">認証する</button>
                     </form>
-                
                 {% else %}
-                
                     {% url 'account_email' as email_url %}
-                
                     <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
-                
                 {% endif %}
-            </div>
+            </p>
         </div>
     </div>
 </div>
-
-
-
 {% endblock %}

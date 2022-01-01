@@ -3,32 +3,34 @@
 {% load i18n %}
 {% load widget_tweaks %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
+<!-- {% block head_title %}{% trans "Signup" %}{% endblock %} -->
 
 {% block content %}
-
-    <div class="col-xl-4 col-lg-6 col-md-7  col-12 m-auto">
-        <div class="card border-grey border-lighten-3 m-0 box-shadow-0 card-account-right height-auto">                
-            <div class="card-content m-0">                    
-                <div class="card-body p-3">
-                    <h1 class="text-center">{% trans "Sign Up" %}</h1>
-                    <form class="signup form-horizontal form-signin" id="signup_form" method="post" action="{% url 'account_signup' %}">{% csrf_token %}
-                        <div style="width: 70%; margin: auto">
-                            {{ form.non_field_errors }}
-                            {% for field in form %}
-                                {{ field.label_tag }}<br>
-                                {{ field | add_class:'form-control'}}
-                                {{ field.errors }}
-                                <hr>
-                            {% endfor %}
-                        </div>
-                        <button class="btn-gradient-primary btn-block my-1" type="submit">{% trans "Sign Up" %}</button>
-                    <p class="text-center"><a href="{% url 'account_login' %}" class="card-link">ログイン</a></p>
-
-                    </form>
+    <div class="w-full min-h-screen bg-gray-50 flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+        <div class="w-full sm:max-w-md p-5 mx-auto">
+            <h2 class="mb-12 text-center text-5xl font-extrabold">Welcome.</h2>
+            <form class="login form-horizontal form-signin" method="POST" action="{% url 'account_signup' %}">{% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                    <div class="mb-4">
+                        <label class="block mb-1" for="email">
+                            {{ field.label_tag }}
+                        </label>
+                        {{ field | add_class:"py-2 px-3 border border-gray-300 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" }}
+                    </div>
+                    {{ field.errors }}
+                    {% endfor %}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                <div class="col-12  text-center">
+                    <a class="text-blue-700" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
                 </div>
-            </div>
+                <button class="w-full inline-flex items-center justify-center mt-6 px-4 py-2 bg-blue-400 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-blue-500 active:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 disabled:opacity-25 transition" type="submit">無料登録</button>
+                <div class="mt-6 text-center">
+                    <a href="{% url 'account_login' %}" class="underline">ログイン</a>
+                </div>
+            </form>
         </div>
-    </div>
-
+    <div>
 {% endblock content %}
