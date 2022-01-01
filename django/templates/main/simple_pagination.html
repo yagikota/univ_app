@@ -1,24 +1,27 @@
 
 <!-- {% load i18n %} -->
-<div>
     {% if is_paginated %}
-    <ul class="pagination justify-content-center">
+    <ul class="flex justify-center">
         {% if page_obj.has_previous %}
-        <li class="page-item"><a class="page-link" href="?{{ page_obj.previous_page_number.querystring }}">&laquo;</a></li>
+        <a class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md hover:bg-blue-500 hover:text-white" href="?{{ page_obj.previous_page_number.querystring }}">
+            <li>&laquo;</li>
+        </a>
         {% else %}
-        <li class="disabled"><span class="page-link">&laquo;</span></li>
+        <li class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md"><span>&laquo;</span></li>
         {% endif %}
 
         {% for page in page_obj.pages %}
             {% if page %}
                 {% if page == page_obj.number %}
-                <li class="page-item active">
-                    <span class="current page page-link ">{{ page }}</span>
+                <li class="px-4 py-2 mx-1 text-white transition-colors duration-200 transform bg-blue-500 rounded-md">
+                    <span>{{ page }}</span>
                 </li>
                 {% else %}
-                <li class="page-item">
-                    <a href="?{{ page.querystring }}" class="page page-link">{{ page }}</a>
-                </li>
+                <a class="px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md hover:bg-blue-500 hover:text-white" href="?{{ page.querystring }}">
+                    <li>
+                        {{ page }}
+                    </li>
+                </a>
                 {% endif %}
             {% else %}
             <li class="page-item">&hellip;</li>
@@ -26,10 +29,12 @@
         {% endfor %}
 
         {% if page_obj.has_next %}
-        <li><a class="page-link" href="?{{ page_obj.next_page_number.querystring }}">&raquo;</a></li>
+        <a href="?{{ page_obj.next_page_number.querystring }}" class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md hover:bg-blue-500 hover:text-white">
+            <li>&raquo;</li>
+        </a>
         {% else %}
-        <li class="disabled"><span class="page-link">&raquo;</span></li>
+        <li><span href="?{{ page_obj.next_page_number.querystring }}" class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md">&raquo;</span></li>
         {% endif %}
     </ul>
     {% endif %}
-</div>
+
