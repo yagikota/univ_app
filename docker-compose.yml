@@ -24,19 +24,21 @@ services:
     env_file:
       - ./.env
 
-  # https-portal:
-  #   image: steveltn/https-portal:1
-  #   ports:
-  #     - '80:80'
-  #     - '443:443'
-  #   restart: always
-  #   environment:
-  #     STAGE: 'local'
-  #     DOMAINS: 'localhost -> http://nginx:1317'
-  #   volumes:
-  #     - https-portal-data:/var/lib/https-portal
-  #   depends_on:
-  #       - web
+# 80番ポートでアクセスするとリダイレクトで443へアクセスします。
+# 80もしくは443でアクセスした場合、nginxno1317ポートへリダイレクト。
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: always
+    environment:
+      STAGE: 'local'
+      DOMAINS: 'localhost -> http://nginx:1317'
+    volumes:
+      - https-portal-data:/var/lib/https-portal
+    depends_on:
+        - web
 
   nginx:
     build: ./nginx
