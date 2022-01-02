@@ -3,25 +3,25 @@
 
 {% block body_wrapper %}
 <!--START ナビゲーション -->
-<nav class="bg-white shadow dark:bg-gray-800 fixed w-full z-50">
+<nav class="bg-white shadow fixed top-0 w-full z-50">
     <div class="px-6 py-4 mx-0 sm:flex sm:justify-between sm:items-center">
         <div class="flex items-center justify-between">
             <div>
-                <a class="text-2xl font-bold text-gray-800 transition-colors duration-200 transform dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300" href="#">Brand</a>
+                <a class="text-2xl font-bold text-gray-800 transition-colors duration-200 transform dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300" href="{% url 'main:list' %}">Brand</a>
             </div>
         </div>
         
         <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
         <div class="items-center hidden sm:block">
             <div class="flex flex-col sm:flex-row sm:mx-6">
-                <a class="my-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 sm:mx-4 sm:my-0" href="#">
-                    <svg class="h-8 w-8 text-black"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="12" cy="12" r="3" />  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>
-                </a>
-                <a class="my-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 sm:mx-4 sm:my-0" href="#">
+                <a class="my-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 sm:mx-4 sm:my-0" href="{% url 'main:list' %}">
                     <svg class="h-8 w-8 text-black"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="9" y1="6" x2="20" y2="6" />  <line x1="9" y1="12" x2="20" y2="12" />  <line x1="9" y1="18" x2="20" y2="18" />  <line x1="5" y1="6" x2="5" y2="6.01" />  <line x1="5" y1="12" x2="5" y2="12.01" />  <line x1="5" y1="18" x2="5" y2="18.01" /></svg>
                 </a>
-                <a class="my-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 sm:mx-4 sm:my-0" href="#">
-                    <button class="px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-400 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                <a class="my-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 sm:mx-4 sm:my-0" href="{% url 'main:profile' %}">
+                    <svg class="h-8 w-8 text-black"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="12" cy="12" r="3" />  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>
+                </a>
+                <a class="my-1 text-sm font-medium text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 sm:mx-4 sm:my-0" href="{% url 'main:new_question' %}">
+                    <button class="px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-400 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                         質問する
                     </button>
                 </a>
@@ -31,86 +31,6 @@
 </nav>
 <!--END ナビゲーション -->
 
-    <body class="vertical-layout vertical-compact-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-compact-menu" data-col="2-columns">
-        <!-- BEGIN fixed-top-->
-        <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
-            <div class="navbar-wrapper">
-                <div class="navbar-header d-md-none">
-                    <ul class="nav navbar-nav flex-row">
-                        <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
-                        <!-- <li class="nav-item d-md-none"><a class="navbar-brand" href="index.html"><img class="brand-logo d-none d-md-block" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"><img class="brand-logo d-sm-block d-md-none" alt="CryptoDash admin logo sm" src="../../../app-assets/images/logo/logo-sm.png"></a></li> -->
-                        <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v">   </i></a></li>
-                    </ul>
-                </div>
-                <div class="navbar-container">
-                    <div class="collapse navbar-collapse" id="navbar-mobile">
-                        <ul class="nav navbar-nav mr-auto float-left">
-                            <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu">         </i></a></li>
-                            <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a>
-                                <div class="search-input">
-                                    <!-- <input class="input" type="text" placeholder="検索"> -->
-                                        <form  class="input" method="GET" action="{% url 'main:list' %}">
-                                            <div class="">
-                                                <div>
-                                                    <input type="text" name="keyword">
-                                                    <select name="sort_order" id="sort_order">
-                                                        <option value>並び替え</option>
-                                                        <option value="date_desc">質問日時の新しい順</option>
-                                                        <option value="date_asc">質問日時の古い順</option>
-                                                        <option value="ans_desc">回答数の多い順</option>
-                                                        <option value="ans_asc">回答数の少ない順</option>
-                                                        <option value="likes_desc">いいねの多い順</option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    <button type="submit" class=" btn btn-secondary">検索</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <!-- END fixed-top-->
-        <!-- BEGIN menu-->
-        <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
-            <!-- <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="{% url 'main:top_page' %}"><img class="brand-logo" alt="CryptoDash admin logo" src="{% static 'css_framework/app-assets/images/logo/logo.png' %}"/></a> -->
-            <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="{% url 'main:top_page' %}"></a>
-                <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                    <li class=" nav-item">
-                        <a href="{% url 'main:top_page' %}">
-                            <i class="fas fa-home"></i>
-                            <span class="menu-title" data-i18n="">トップページ</span>
-                        </a>
-                    </li>
-                    <li class=" nav-item">
-                        <a href="{% url 'main:list' %}">
-                            <i class="fas fa-list"></i>
-                            <span class="menu-title" data-i18n="">質問一覧</span>
-                        </a>
-                    </li>
-                    <li class=" nav-item"><a href="{% url 'main:profile' %}"><i class="fas fa-user"></i><span class="menu-title" data-i18n="">アカウント</span></a>
-                        <ul class="menu-content">
-                            <li><a class="menu-item" href="{% url 'main:profile' %}">マイページ</a></li>
-                            <li><a class="menu-item" href="{% url 'account_logout' %}">ログアウト</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        END menu
-        
-        {% block body %}
-        {% endblock body%}
-
-        <footer class="footer footer-static footer-transparent">
-            <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright  &copy; <script>
-                document.write(new Date().getFullYear())
-            </script> <a class="text-bold-800 grey darken-2" href="https://themeselection.com/" target="_blank">ThemeSelection </a>, All rights reserved. </span><span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">Hand-crafted & Made with <i class="ft-heart pink"></i></span></p>
-        </footer>
-
-    </body>
+{% block body %}
+{% endblock body%}
 {% endblock body_wrapper %}
