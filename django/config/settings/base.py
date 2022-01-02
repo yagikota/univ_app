@@ -132,7 +132,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # SECURE_SSL_REDIRECT = True
 
 # django-allauthの設定
-LOGIN_REDIRECT_URL = '/top_page/'
+LOGIN_REDIRECT_URL = '/list'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_ON_GET = True 
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'# the user is blocked from logging in until the email address is verified

@@ -3,21 +3,21 @@
     {% if is_paginated %}
     <ul class="flex justify-center">
         {% if page_obj.has_previous %}
-        <a class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md hover:bg-blue-500 hover:text-white" href="?{{ page_obj.previous_page_number.querystring }}">
+        <a class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-lg hover:bg-blue-500 hover:text-white" href="?{{ page_obj.previous_page_number.querystring }}">
             <li>&laquo;</li>
         </a>
         {% else %}
-        <li class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md"><span>&laquo;</span></li>
+        <li class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-lg"><span>&laquo;</span></li>
         {% endif %}
 
         {% for page in page_obj.pages %}
             {% if page %}
                 {% if page == page_obj.number %}
-                <li class="px-4 py-2 mx-1 text-white transition-colors duration-200 transform bg-blue-500 rounded-md">
+                <li class="px-4 py-2 mx-1 text-white transition-colors duration-200 transform bg-blue-500 rounded-lg">
                     <span>{{ page }}</span>
                 </li>
                 {% else %}
-                <a class="px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md hover:bg-blue-500 hover:text-white" href="?{{ page.querystring }}">
+                <a class="px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-lg hover:bg-blue-500 hover:text-white" href="?{{ page.querystring }}">
                     <li>
                         {{ page }}
                     </li>
@@ -29,11 +29,11 @@
         {% endfor %}
 
         {% if page_obj.has_next %}
-        <a href="?{{ page_obj.next_page_number.querystring }}" class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md hover:bg-blue-500 hover:text-white">
+        <a href="?{{ page_obj.next_page_number.querystring }}" class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-lg hover:bg-blue-500 hover:text-white">
             <li>&raquo;</li>
         </a>
         {% else %}
-        <li><span href="?{{ page_obj.next_page_number.querystring }}" class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md">&raquo;</span></li>
+        <li><span href="?{{ page_obj.next_page_number.querystring }}" class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-lg">&raquo;</span></li>
         {% endif %}
     </ul>
     {% endif %}

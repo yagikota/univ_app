@@ -18,7 +18,7 @@
                             <label class="block mb-1" for="email">
                                 {{ field.label_tag }}
                             </label>
-                            {{ field | add_class:"py-2 px-3 border border-gray-300 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" }}
+                            {{ field | add_class:"py-2 px-3 border border-gray-300 focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-lg shadow-sm disabled:bg-gray-100 mt-1 block w-full" }}
                         </div>
                     {{ field.errors }}
                 {% endfor %}
@@ -28,7 +28,7 @@
             <div class="col-12  text-center">
                 <a class="text-blue-700" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
             </div>
-            <button class="w-full inline-flex items-center justify-center mt-6 px-4 py-2 bg-blue-400 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-blue-500 active:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 disabled:opacity-25 transition" type="submit">{% trans "Sign In" %}</button>
+            <button class="w-full inline-flex items-center justify-center mt-6 px-4 py-2 bg-blue-400 border border-transparent rounded-lg font-semibold capitalize text-white hover:bg-blue-500 active:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 disabled:opacity-25 transition" type="submit">{% trans "Sign In" %}</button>
             <div class="mt-6 text-center">
                 <a href="{% url 'account_signup' %}" class="underline text-blue-700">無料登録</a>
             </div>
