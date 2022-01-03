@@ -106,6 +106,7 @@ def likeview(request):
             like.create(question=question, author=author)
             liked = True
 
+        # responseとして渡される
         context={
             'question_id': question.id,
             'liked': liked,
