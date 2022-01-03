@@ -132,12 +132,13 @@
             $(document).on('click', '#like', function(event){
                 event.preventDefault();
                 $.ajax({
-                    type: 'POST',
-                    url: "{% url 'main:like' %}",
+                    type: 'POST', // HTTP通信の種類を指定
+                    url: "{% url 'main:like' %}", // リクエストを送信する先のURLを指定。
                     data: {
-                        'question_id': $(this).attr('name'),
+                        'question_id': $(this).attr('name'), // フォームデータを指定。 likeviewで処理される
                         'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                    dataType: 'json',
+                    dataType: 'json', // サーバから返されるデータの型を指定 return JsonResponse(context)
+                    // 通信成功時に呼ばれるコールバック関数を指定
                     success: function(response){
                         selector = document.getElementsByName(response.question_id);
                         if(response.liked){
