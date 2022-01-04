@@ -2,25 +2,48 @@
 
 {% block content %}
 
+<div class="tab mt-24 flex overflow-x-auto">
+    <a href="{% url 'main:profile' %}" id="profile" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 border border-b-0 border-gray-300 sm:text-base dark:border-gray-500 rounded-t-md dark:text-white whitespace-nowrap focus:outline-none">
+        プロフィール
+    </a>
+
+    <a href="{% url 'main:my_q_list' %}" id="my_question" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        自分の質問
+    </a>
+
+    <a href="{% url 'main:liked_list' %}" id=liked_question" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        いいねした質問
+    </a>
+    <a href="{% url 'account_set_password' %}" id="pw_change" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        パスワード変更
+    </a>
+    <a href="{% url 'main:delete_confirm' %}" id="delete" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        退会
+    </a>
+</div>
+<div class="shadow-xl border border-gray-100 font-light p-8 rounded text-gray-500 bg-white mt-6">
+
+
     <table class="table borderless">
         <tbody>
-        <tr>
-            <th scope="row">ユーザー名</th>
-            <td>{{ user.username }}</td>
-        </tr>
-        <tr>
-            <th scope="row">メール</th>
-            <td>{{ user.email }}</td>
-        </tr>
-        <tr>
-            <th scope="row">最終ログイン日時</th>
-            <td>{{ user.last_login }}</td>
-        </tr>
-        <tr>
-            <th scope="row">入会日</th>
-            <td>{{ user.date_joined }}</td>
-        </tr>
+            <tr>
+                <th scope="row">ユーザー名</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th scope="row">メール</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th scope="row">最終ログイン日時</th>
+                <td>{{ user.last_login }}</td>
+            </tr>
+            <tr>
+                <th scope="row">入会日</th>
+                <td>{{ user.date_joined }}</td>
+            </tr>
         </tbody>
     </table>
+</div>
 
 {% endblock content %}

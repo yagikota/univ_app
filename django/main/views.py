@@ -166,8 +166,10 @@ class MyQuestionListView(LoginRequiredMixin, PaginationMixin, ListView):
             return question.order_by('-created_at')
         elif sort_order == 'date_asc':
             return question.order_by('created_at')
+        # 改善の余地あり
         elif sort_order == 'ans_desc':
             return question.annotate(num_responses=Count('responses')).order_by('-num_responses')
+        # 改善の余地あり
         elif sort_order == 'ans_asc':
             return question.annotate(num_responses=Count('responses')).order_by('num_responses')
         else:
@@ -217,7 +219,7 @@ class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'main/comment_create.html'
     # model = Question
     form_class = NewQuestionForm
-    success_url = reverse_lazy('main:new_question')
+    success_url = reverse_lazy('main:list')
     success_message = "質問を投稿しました。"
 
     def form_valid(self, form):
