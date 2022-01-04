@@ -2,7 +2,31 @@
 
 {% block content %}
 
-    <p>アカウントを削除します。よろしいですか?</p>
-    <a class="btn btn-danger" href="{% url 'main:delete_complete' %}">はい</a>
+<div class="tab mt-24 flex overflow-x-auto">
+    
+    <a href="{% url 'main:profile' %}" id="my_question" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        プロフィール
+    </a>
 
+    <a href="{% url 'main:my_q_list' %}" id="profile" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        自分の質問
+    </a>
+    
+    <a href="{% url 'main:liked_list' %}" id=liked_question" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        いいねした質問
+    </a>
+    <a href="{% url 'account_set_password' %}" id="pw_change" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        パスワード変更
+    </a>
+    <a href="{% url 'main:delete_confirm' %}" id="delete" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 border border-b-0 border-gray-300 sm:text-base dark:border-gray-500 rounded-t-md dark:text-white whitespace-nowrap focus:outline-none">
+        退会
+    </a>
+</div>
+
+<div class="shadow-xl border border-gray-100 font-light p-8 rounded text-gray-500 bg-white mt-6">
+    <p>アカウントを削除します。よろしいですか?</p>
+    <div class="mt-2">
+        <a class="px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-400 focus:ring-opacity-80" href="{% url 'main:delete_complete' %}">はい</a>
+    </div>
+</div>
 {% endblock %}

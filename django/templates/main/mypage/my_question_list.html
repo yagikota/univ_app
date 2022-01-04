@@ -2,59 +2,49 @@
 
 {% block content %}
 
-<div class="content-detached ">
-    <div class="content-body">
-        <div id="wallet">
-            {% include 'main/simple_pagination.html' %}
-            <div class="wallet-table-th d-none d-md-block">
-                <div class="row">
-                    <div class="col-md-6 col-12 py-1">
-                        <p class="mt-0 text-capitalize">質問文</p>
-                    </div>
-                    <div class="col-md-2 col-12 py-1 text-center">
-                        <p class="mt-0 text-capitalize">質問者</p>
-                    </div>
-                    <div class="col-md-2 col-12 py-1 text-center">
-                        <p class="mt-0 text-capitalize">質問日</p>
-                    </div>
-                    <div class="col-md-2 col-12 py-1 text-center">
-                        <p class="mt-0 text-capitalize">返信・いいね数</p>
-                    </div>
-                </div>
-            </div>
+<div class="tab mt-24 flex overflow-x-auto">
+    
+    <a href="{% url 'main:profile' %}" id="my_question" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        プロフィール
+    </a>
 
-        {% for question in my_questions %}
-        <section class="card ">
-            <div class="card-content">
-                <div class="card-body">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="col-md-6 col-12 py-1">
-                                <div class="media-body">
-                                    <h5 class="mt-0 text-capitalize">{{ question.title }}</h5>
-                                    <p class="text-muted mb-0 font-small-3 wallet-address">{{ question.body|truncatechars_html:100}}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-12 py-1 text-center">
-                                <p class="text-muted mb-0 font-small-3">{{ question.author }}</p>
-                            </div>
-                            <div class="col-md-2 col-12 py-1 text-center">
-                                <p class="text-muted mb-0 font-small-3">{{ question.created_at | date:"Y/m/d H:i" }}</p>
-                            </div>
-                            <div class="col-md-2 col-12 py-1 text-center">
-                                {% include 'main/like.html' %}
-                                <a class=" btn btn-secondary mt-1 btn-block" href="{% url 'main:question' question.id %}">回答</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        {% endfor %}
-
+    <a href="{% url 'main:my_q_list' %}" id="profile" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 border border-b-0 border-gray-300 sm:text-base dark:border-gray-500 rounded-t-md dark:text-white whitespace-nowrap focus:outline-none">
+        自分の質問
+    </a>
+    
+    <a href="{% url 'main:liked_list' %}" id=liked_question" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        いいねした質問
+    </a>
+    <a href="{% url 'account_set_password' %}" id="pw_change" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        パスワード変更
+    </a>
+    <a href="{% url 'main:delete_confirm' %}" id="delete" class="flex items-center h-12 px-4 py-2 text-sm text-center text-gray-700 bg-transparent border-b border-gray-300 sm:text-base dark:border-gray-500 dark:text-white whitespace-nowrap cursor-base focus:outline-none hover:border-gray-400 dark:hover:border-gray-300">
+        退会
+    </a>
+</div>
+<div class="">
+    <div class="my-4 sm:w-full md:w-1/2">
         {% include 'main/simple_pagination.html' %}
-
+        <!--STRAT 質問一覧 -->
+        {% for question in my_questions %}
+        <div class="my-4 px-8 py-4 mx-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-light text-gray-600 dark:text-gray-400">{{ question.created_at | date:"Y/m/d H:i" }} by {{ question.author }}</span>
+                <a href="{% url 'main:question' question.id %}" class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-200 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500">回答</a>
+            </div>
+            
+            <div class="mt-2">
+                <a href="{% url 'main:question' question.id %}" class="text-2xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline">{{ question.title }}</a>
+                <p class="mt-2 text-gray-600 dark:text-gray-300">{{ question.body|truncatechars_html:100}}</p>
+            </div>
+            
+            <div class="text-right">
+                {% include 'main/like.html' %}
+            </div>
         </div>
+        {% endfor %}
+        <!--END 質問一覧 -->
+        {% include 'main/simple_pagination.html' %}
     </div>
 </div>
 
