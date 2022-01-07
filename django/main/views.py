@@ -226,70 +226,53 @@ class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         # 重要
         # https://docs.djangoproject.com/ja/4.0/topics/class-based-views/generic-editing/#models-and-request-user
         form.instance.author = self.request.user
+        print(self.get_context_data())
         return super().form_valid(form)
 
     def get_form(self, form_class=None):
         """Return an instance of the form to be used in this view."""
         if form_class is None:
             form_class = self.get_form_class()
-        
+
         return form_class(**self.get_form_kwargs())
 
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = NewQuestionForm()
-        return context
+    # いらない
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     print(context)
+    #     context['form'] = NewQuestionForm()
+    #     return context
 
 post_question = PostQuestionView.as_view()
 
-# def new_question_page(request):
-#     form = NewQuestionForm()
-
-#     if request.method == 'POST':
-#         try:
-#             form = NewQuestionForm(request.POST)
-#             if form.is_valid():
-#                 question = form.save(commit=False)
-#                 question.author = request.user
-#                 question.save()
-#         except Exception as e:
-#             messages.error(request, e)
-
-#     context = {
-#         'form': form,
-#         'messages': messages,
-#     }
-
-#     return render(request, 'main/comment_create.html', context)
-
 # 質問への返信の処理
-def question_page(request, id):
-    response_form = NewResponseForm()
-    reply_form = NewReplyForm()
+class QuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    template_name = 'main/question.html'
+    # response_form
+    form_class = NewResponseForm
 
-    if request.method == 'POST':
-        try:
-            response_form = NewResponseForm(request.POST)
-            if response_form.is_valid():
-                # commit=FalseとしてResponseのインスタンスを代入, commit=Trueだと
-                response = response_form.save(commit=False)
-                # formで入力されなかったfieldを入力
-                response.author = request.user
-                response.question = Question(id=id)
-                response.save()
-                return redirect('/question/'+str(id))
-        except Exception as e:
-            print(e)
-            raise
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        question = Question.objects.get(id=self.kwargs['id'])
+        reply_form = NewReplyForm()
+        response_form = NewResponseForm()
+        context['question'] = question
+        # context['response_form'] = response_form
+        context['reply_form'] = reply_form
+        # print(context)
+        return context
 
-    question = Question.objects.get(id=id)
-    context = {
-        'question': question,
-        'response_form': response_form,
-        'reply_form': reply_form,
-    }
-    return render(request, 'main/question.html', context)
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.question = Question(id=self.kwargs['id'])
+        print(type(form))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('main:question', kwargs={'id': self.kwargs['id']})
+
+
+question = QuestionView.as_view()
 
 # 返信に対する返信の処理
 def replypage(request):

@@ -15,6 +15,6 @@ urlpatterns = [
     path('delete_complete/', views.delete_user_complete, name='delete_complete'),
     path('new_question/', views.post_question, name='new_question'),
     # path('new_question/', new_question_page, name='new_question'),
-    path('question/<int:id>/', views.question_page, name='question'),
+    path('question/<int:id>/', views.question, name='question'),
     path('reply/', views.replypage, name='reply'), 
 ]
