@@ -120,6 +120,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# default
+DEFAULT_FROM_EMAIL ='yagikota@localhost'
 
 # メール送信の処理
 # EMAIL_HOST = 'smtp.sendgrid.net'
@@ -129,7 +131,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_USE_TLS = True
 # 暗号化されたhttpsを使うようにする
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = False
 
 # django-allauthの設定
 LOGIN_REDIRECT_URL = '/list'

@@ -43,9 +43,9 @@ class UrlsTests(TestCase):
         url = self.reverse_url('delete_confirm')
         self.assertEqual(resolve(url).func, views.delete_user_confirm)
 
-    def test_new_question_url_is_resolved(self):
-        url = self.reverse_url('new_question')
-        self.assertEqual(resolve(url).func, views.new_question_page)
+    def test_post_question_url_is_resolved(self):
+        url = self.reverse_url('post_question')
+        self.assertEqual(resolve(url).func, views.post_question_page)
 
     def test_question_url_is_resolved(self):
         url = reverse('main:question', args=[1])
