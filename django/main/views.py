@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import logout as auth_logout
 from django.views.generic import ListView, TemplateView, View, CreateView
 from .models import Question, Response, Likes
 from django.contrib.auth.models import User
@@ -17,7 +16,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from functools import reduce
 from operator import and_
-
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from config.settings.base import DEFAULT_FROM_EMAIL
 # Create your views here.
 User = get_user_model()
 
@@ -255,17 +256,35 @@ class QuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         context = super().get_context_data(**kwargs)
         question = Question.objects.get(id=self.kwargs['id'])
         reply_form = NewReplyForm()
-        response_form = NewResponseForm()
         context['question'] = question
-        # context['response_form'] = response_form
         context['reply_form'] = reply_form
-        # print(context)
         return context
+
+    # 回答がついたことを通知
+    def notify(self, form):
+        context = {
+            'user': self.request.user,
+            'scheme': self.request.scheme,
+            'domain': self.request.get_host(),
+            'id': self.kwargs['id'],
+            'body': form.cleaned_data['body'][:10],
+        }
+        subject = render_to_string('mail/get_answer/subject.txt', context, self.request)
+        message = render_to_string('mail/get_answer/message.txt', context, self.request)
+        from_email = DEFAULT_FROM_EMAIL
+        to_email = self.request.user.email
+        email = EmailMessage(
+            subject,
+            message,
+            from_email,
+            [to_email],
+        )
+        email.send()
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         form.instance.question = Question(id=self.kwargs['id'])
-        print(type(form))
+        self.notify(form)
         return super().form_valid(form)
 
     def get_success_url(self):
