@@ -19,6 +19,7 @@ from operator import and_
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from config.settings.base import DEFAULT_FROM_EMAIL
+
 # Create your views here.
 User = get_user_model()
 
@@ -36,7 +37,7 @@ class TopPage(LoginRequiredMixin, TemplateView):
 top_page = TopPage.as_view()
 
 
-class QuestionListView(LoginRequiredMixin, PaginationMixin, ListView):
+class QuestionListView(PaginationMixin, ListView):
     template_name = 'main/list.html'
     model = Question
     context_object_name = 'questions'
@@ -221,28 +222,18 @@ class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     # model = Question
     form_class = NewQuestionForm
     success_url = reverse_lazy('main:list')
-    success_message = "質問を投稿しました。"
 
     def form_valid(self, form):
         # 重要
         # https://docs.djangoproject.com/ja/4.0/topics/class-based-views/generic-editing/#models-and-request-user
         form.instance.author = self.request.user
+        messages.success(self.request, '質問を投稿しました。')
         print(self.get_context_data())
         return super().form_valid(form)
 
-    def get_form(self, form_class=None):
-        """Return an instance of the form to be used in this view."""
-        if form_class is None:
-            form_class = self.get_form_class()
-
-        return form_class(**self.get_form_kwargs())
-
-    # いらない
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     print(context)
-    #     context['form'] = NewQuestionForm()
-    #     return context
+    def form_invalid(self, form):
+        messages.error(self.request, '質問の投稿に失敗しました。')
+        return super().form_invalid(form)
 
 post_question = PostQuestionView.as_view()
 
@@ -285,7 +276,12 @@ class QuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         form.instance.author = self.request.user
         form.instance.question = Question(id=self.kwargs['id'])
         self.notify(form)
+        messages.success(self.request, '回答を投稿しました。')
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, '回答の投稿に失敗しました。')
+        return super().form_invalid(form)
 
     def get_success_url(self):
         return reverse_lazy('main:question', kwargs={'id': self.kwargs['id']})

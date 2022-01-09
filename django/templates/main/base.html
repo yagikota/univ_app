@@ -36,6 +36,69 @@
 </nav>
 <!--END ナビゲーション -->
 
+<!-- STARTメッセージ -->
+{% if messages %}
+<div class="mt-24">
+    {% for message in messages %}
+    {% if message.tags == "success" %}
+    <div class="w-full text-white bg-green-100 border-b-2 border-green-300" id="alert">
+        <div class="flex justify-between items-center px-6 py-4 m-0">
+            <div class="flex">
+                <span class="text-green-500">
+                    <svg fill="currentColor"
+                            viewBox="0 0 20 20"
+                            class="h-6 w-6">
+                        <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                    </svg>
+                </span>
+                <p class="mx-3 text-lg text-green-800" >{{ message }}</p>
+                <!-- <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
+            </div>
+            <button class="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none" id="alert-button">
+                <svg class="w-5 h-5 text-green-800" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 18L18 6M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    {% elif message.tags == "error" %}
+    <div class="w-full text-white bg-red-100 border-b-2 border-red-300" id="alert">
+        <div class="flex justify-between items-center px-6 py-4 m-0">
+            <div class="flex">
+                <span class="text-red-500">
+                    <svg fill="currentColor"
+                            viewBox="0 0 20 20"
+                            class="h-6 w-6">
+                        <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                    </svg>
+                </span>
+                <p class="mx-3 text-lg text-red-800" >{{ message }}</p>
+                <!-- <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
+            </div>
+            <button class="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none" id="alert-button">
+                <svg class="w-5 h-5 text-red-800" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 18L18 6M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+<!-- END メッセージ -->
+
 {% block body %}
 {% endblock body%}
+<!-- アラートを消す処理 -->
+<script type="text/javascript">
+document.getElementById("alert-button").onclick = function() {
+    $("#alert").addClass('hidden');
+    };
+</script>
+
 {% endblock body_wrapper %}
