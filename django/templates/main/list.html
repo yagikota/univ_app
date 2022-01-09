@@ -4,16 +4,6 @@
 {% endblock header %}
 
 {% block body %}
-<!-- STARTメッセージ -->
-<!-- {% if messages %}
-    <ul class="list-unstyled">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %} -->
-<!-- END メッセージ -->
-
 <div class="grid mt-24 md:flex md:mt-32">
     <!-- START 検索 -->
         <div  class="my-4 sm:w-full md:w-1/4">
@@ -122,12 +112,11 @@
 
     <!-- いいねの処理 -->
     <script type="text/javascript">
-    //    $('select').on('change', function() {
-      //      $("select option").attr("selected", false);
-        //    $(this).attr("selected", true);
-         //   $("#sort_form").submit();
-        //});
 
+        document.getElementById("alert-button").onclick = function() {
+            document.getElementById("alert").addClass('hidden');
+            };
+            
         $(document).ready(function(event){
             $(document).on('click', '#like', function(event){
                 event.preventDefault();

@@ -5,9 +5,9 @@ class User(AbstractUser):
     pass
 
 class Question(models.Model):
-    author = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200, null=True)
-    body = models.TextField(max_length=500, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -18,11 +18,11 @@ class Question(models.Model):
         return self.responses.filter(parent=None)
 
 class Response(models.Model):
-    author = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, null=False, on_delete=models.CASCADE, related_name='responses')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='responses')
     # 返信に対する返信で使用
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
-    body = models.TextField(null=False)
+    body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
