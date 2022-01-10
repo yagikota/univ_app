@@ -10,4 +10,7 @@ urlpatterns = [
                 path('accounts/password/change/', login_after_password_change, name='account_change_password'), # before allauth urls to override
                 path('accounts/password/change/done', PasswordChangeDoneView.as_view(),name='password_change_done'),
                 path('accounts/', include('allauth.urls')),
-            ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+            ] 
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
