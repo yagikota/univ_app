@@ -37,3 +37,6 @@ class Likes(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='likes')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+# class Images

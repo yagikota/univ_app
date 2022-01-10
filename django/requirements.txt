@@ -14,6 +14,8 @@ django-widget-tweaks
 gunicorn
 idna
 oauthlib
+Pillow
+python-magic
 pycparser
 PyJWT
 python3-openid
