@@ -219,13 +219,10 @@ delete_user_complete = DeleteUserCompleteView.as_view()
 # 質問する時の処理
 class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'main/comment_create.html'
-    # model = Question
     form_class = NewQuestionForm
     success_url = reverse_lazy('main:list')
 
     def form_valid(self, form):
-        # 重要
-        # https://docs.djangoproject.com/ja/4.0/topics/class-based-views/generic-editing/#models-and-request-user
         form.instance.author = self.request.user
         messages.success(self.request, '質問を投稿しました。')
         print(self.get_context_data())
