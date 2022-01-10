@@ -7,7 +7,6 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 PROJECT_NAME = os.path.basename(BASE_DIR)
 
-
 # 環境変数設定
 env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, '.env'))
