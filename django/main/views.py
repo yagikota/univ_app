@@ -3,7 +3,7 @@ from django.views.generic import ListView, TemplateView, View, CreateView
 from .models import Question, Response, Likes
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import NewQuestionForm, NewReplyForm, NewResponseForm
+from .forms import NewQuestionForm, NewReplyForm, NewResponseForm, QuestionImageFormSet
 from django.contrib.auth import get_user_model
 from pure_pagination.mixins import PaginationMixin
 from django.http import JsonResponse
@@ -222,13 +222,42 @@ class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = NewQuestionForm
     success_url = reverse_lazy('main:list')
 
+    def get_context_data(self, **kwargs):
+        context = super(PostQuestionView, self).get_context_data(**kwargs) # ?
+        # context = super().get_context_data(**kwargs)
+
+        if self.request.POST:
+            context['question_images'] = QuestionImageFormSet(self.request.POST)
+        else:
+            context['question_images'] = QuestionImageFormSet()
+        return context
+
+    # def post(self, request, *args, **kwargs):
+    #     form_class = self.get_form_class()
+    #     form = self.get_form(form_class)
+    #     files = request.FILES.getlist('file_field')
+    #     print(files)
+    #     if form.is_valid():
+    #         for file in files:
+    #             print(file)
+    #         return self.form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
+
     def form_valid(self, form):
+        context = self.get_context_data()
+        question_images = context['question_images']
         form.instance.author = self.request.user
+        if question_images.is_valid():
+            self.object = form.save()
+            question_images.instance = self.object
+            question_images.save()
+
         messages.success(self.request, '質問を投稿しました。')
-        print(self.get_context_data())
         return super().form_valid(form)
 
     def form_invalid(self, form):
+        print(form)
         messages.error(self.request, '質問の投稿に失敗しました。')
         return super().form_invalid(form)
 
@@ -240,12 +269,13 @@ class QuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     # response_form
     form_class = NewResponseForm
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):        
         context = super().get_context_data(**kwargs)
         question = Question.objects.get(id=self.kwargs['id'])
         reply_form = NewReplyForm()
         context['question'] = question
         context['reply_form'] = reply_form
+        print(question.image)
         return context
 
     # 回答がついたことを通知

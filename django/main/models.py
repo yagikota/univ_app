@@ -8,7 +8,6 @@ class Question(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     body = models.TextField()
-    image = models.ImageField(upload_to="image/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -17,6 +16,10 @@ class Question(models.Model):
 
     def get_responses(self):
         return self.responses.filter(parent=None)
+
+class QuestionImage(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='queston_img')
+    image = models.ImageField(upload_to="image/", blank=True, null=True)
 
 class Response(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)

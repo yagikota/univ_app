@@ -49,6 +49,9 @@
                         <div class="card-text mt-2">
                             <p class="question-body">{{question.body}}</p>
                         </div>
+                        {% if question.image %}
+                            <img src="{{question.image.url}}" width="100%" height="100%"alt="画像">
+                        {% endif  %}
                     </div>
                 </div>
                 <!-- START 回答送信form -->

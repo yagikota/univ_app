@@ -1,4 +1,4 @@
-from .models import Question, Response
+from .models import Question, QuestionImage, Response
 from django import forms
 
 
@@ -15,8 +15,21 @@ class NewQuestionForm(forms.ModelForm):
             'body': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': '質問内容を入力してください。'
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+                'multiple': True, # 複数ファイル送信可能
             })
         }
+
+
+QuestionImageFormSet = forms.inlineformset_factory(
+    Question,
+    QuestionImage,
+    fields = '__all__',
+    extra=3,
+    max_num=3,
+)
 
 class NewResponseForm(forms.ModelForm):
     class Meta:
