@@ -225,38 +225,30 @@ class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(PostQuestionView, self).get_context_data(**kwargs) # ?
         # context = super().get_context_data(**kwargs)
-
         if self.request.POST:
-            context['question_images'] = QuestionImageFormSet(self.request.POST)
+            print(self.request.POST)
+            context['formset'] = QuestionImageFormSet(self.request.POST)
         else:
-            context['question_images'] = QuestionImageFormSet()
+            context['formset'] = QuestionImageFormSet()
+            # print(self.object)
+            # print(context['formset'])
         return context
 
-    # def post(self, request, *args, **kwargs):
-    #     form_class = self.get_form_class()
-    #     form = self.get_form(form_class)
-    #     files = request.FILES.getlist('file_field')
-    #     print(files)
-    #     if form.is_valid():
-    #         for file in files:
-    #             print(file)
-    #         return self.form_valid(form)
-    #     else:
-    #         return self.form_invalid(form)
-
     def form_valid(self, form):
+        print('form_valid')
         context = self.get_context_data()
-        question_images = context['question_images']
-        form.instance.author = self.request.user
-        if question_images.is_valid():
-            self.object = form.save()
-            question_images.instance = self.object
-            question_images.save()
+        formset = context['formset']
+        if formset.is_valid():
+            self.object = form.save() # ?
+            formset.instance = self.object
+            formset.save()
+        form.instance.author = self.request.user # ?
 
         messages.success(self.request, '質問を投稿しました。')
         return super().form_valid(form)
 
     def form_invalid(self, form):
+        print('form_invalid')
         print(form)
         messages.error(self.request, '質問の投稿に失敗しました。')
         return super().form_invalid(form)

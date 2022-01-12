@@ -18,7 +18,7 @@ class Question(models.Model):
         return self.responses.filter(parent=None)
 
 class QuestionImage(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='queston_img')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='queston_image')
     image = models.ImageField(upload_to="image/", blank=True, null=True)
 
 class Response(models.Model):
