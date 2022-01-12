@@ -16,10 +16,6 @@ class NewQuestionForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': '質問内容を入力してください。'
             }),
-            'image': forms.ClearableFileInput(attrs={
-                'class': 'form-control',
-                'multiple': True, # 複数ファイル送信可能
-            })
         }
 
 
@@ -27,8 +23,9 @@ QuestionImageFormSet = forms.inlineformset_factory(
     Question,
     QuestionImage,
     fields = '__all__',
-    extra=3,
+    extra=1,
     max_num=3,
+    can_delete=False,
 )
 
 class NewResponseForm(forms.ModelForm):
