@@ -9,6 +9,7 @@ Django
 django-allauth
 django-bootstrap4
 django-environ
+django-extra-views
 django-pure-pagination
 django-widget-tweaks
 gunicorn
