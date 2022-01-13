@@ -1,4 +1,4 @@
-from .models import Question, QuestionImage, Response
+from .models import Question, Response
 from django import forms
 
 
@@ -17,16 +17,6 @@ class NewQuestionForm(forms.ModelForm):
                 'placeholder': '質問内容を入力してください。'
             }),
         }
-
-
-QuestionImageFormSet = forms.inlineformset_factory(
-    Question,
-    QuestionImage,
-    fields = '__all__',
-    extra=1,
-    max_num=3,
-    can_delete=False,
-)
 
 class NewResponseForm(forms.ModelForm):
     class Meta:
