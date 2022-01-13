@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'extra_views',
 ]
 
 # django-allauthを使用するのに必要
