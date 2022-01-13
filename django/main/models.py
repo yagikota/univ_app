@@ -21,6 +21,7 @@ class QuestionImage(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='queston_image')
     image = models.ImageField(upload_to="image/", blank=True, null=True)
 
+
 class Response(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='responses')

@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, TemplateView, View, CreateView
-from .models import Question, Response, Likes
+from .models import Question, QuestionImage, Response, Likes
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import NewQuestionForm, NewReplyForm, NewResponseForm, QuestionImageFormSet
+from .forms import NewQuestionForm, NewReplyForm, NewResponseForm
 from django.contrib.auth import get_user_model
 from pure_pagination.mixins import PaginationMixin
 from django.http import JsonResponse
@@ -19,6 +19,7 @@ from operator import and_
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from config.settings.base import DEFAULT_FROM_EMAIL
+from extra_views import CreateWithInlinesView, InlineFormSetFactory
 
 # Create your views here.
 User = get_user_model()
@@ -216,32 +217,21 @@ class DeleteUserCompleteView(LoginRequiredMixin, View):
 delete_user_complete = DeleteUserCompleteView.as_view()
 
 
-# 質問する時の処理
-class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    template_name = 'main/comment_create.html'
-    form_class = NewQuestionForm
-    success_url = reverse_lazy('main:list')
 
-    def get_context_data(self, **kwargs):
-        context = super(PostQuestionView, self).get_context_data(**kwargs) # ?
-        # context = super().get_context_data(**kwargs)
-        if self.request.POST:
-            print(self.request.POST)
-            context['formset'] = QuestionImageFormSet(self.request.POST)
-        else:
-            context['formset'] = QuestionImageFormSet()
-            # print(self.object)
-            # print(context['formset'])
-        return context
+class QuestionImageInline(InlineFormSetFactory):
+    model = QuestionImage
+    fields = ['image']
+
+# 質問する時の処理
+class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateWithInlinesView):
+    model = Question
+    form_class = NewQuestionForm
+    inlines = [QuestionImageInline]
+    template_name = 'main/comment_create.html'
+    success_url = reverse_lazy('main:list')
 
     def form_valid(self, form):
         print('form_valid')
-        context = self.get_context_data()
-        formset = context['formset']
-        if formset.is_valid():
-            self.object = form.save() # ?
-            formset.instance = self.object
-            formset.save()
         form.instance.author = self.request.user # ?
 
         messages.success(self.request, '質問を投稿しました。')
@@ -264,10 +254,11 @@ class QuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):        
         context = super().get_context_data(**kwargs)
         question = Question.objects.get(id=self.kwargs['id'])
+        question_images = QuestionImage.objects.filter(question=question)
+        context['question_images'] = question_images
         reply_form = NewReplyForm()
         context['question'] = question
         context['reply_form'] = reply_form
-        print(question.image)
         return context
 
     # 回答がついたことを通知
