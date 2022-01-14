@@ -24,7 +24,6 @@ class NewResponseForm(forms.ModelForm):
         fields = ['body']
         widgets = {
             'body': forms.Textarea(attrs={
-                'autofocus': True,
                 'class': 'form-control',
                 'placeholder': '回答内容を入力してください。'
             })
