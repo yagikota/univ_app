@@ -4,7 +4,6 @@
 
 {% block body %}
 
-
 <div class="grid mt-24 md:flex md:mt-32">
     <!-- START 検索 -->
     <div  class="my-4 sm:w-full md:w-1/4">
@@ -39,20 +38,28 @@
             <div class="page question-page">
                 <div class="my-4 px-8 py-4 mx-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
                     <!-- 質問内容 -->
-                    <div class="card-body pb-0">
-                        <div class="card-header p-0">
+                    <div class=" pb-0">
+                        <div class="p-0">
                             <strong>{{question.author.username}}</strong> <span class="text-xs text-gray-400">{{ question.created_at | date:"Y/m/d H:i" }}</span>
                         </div>
                         <div class="text-2xl font-bold text-gray-700 dark:text-white">
                             {{question.title}}
                         </div>
-                        <div class="card-text mt-2">
+                        <div class="mt-2">
                             <p class="question-body">{{question.body}}</p>
                         </div>
+                    </div>
+                    <!--START 画像挿入 -->
+                    <div class="mt-4 snap-x w-full sm:flex">
                         {% for question_image in question_images %}
-                            <img src="{{question_image.image.url}}" width="100%" height="100%"alt="画像">
+                        <div class="mt-2">
+                            <a href="{{question_image.image.url}}" target="_blank">
+                                <img src="{{question_image.image.url}}" width="500" height="500" alt="画像">
+                            </a>
+                        </div>
                         {% endfor  %}
                     </div>
+                    <!--END 画像挿入 -->
                 </div>
                 <!-- START 回答送信form -->
                 {% if user.is_authenticated %}
@@ -68,7 +75,6 @@
                 </div>
                 {% endif %}
                 <!-- END 回答送信form -->
-
                 <!-- START 返信を表示 -->
                 <div class="antialiased mx-auto max-w-screen-sm">
                     <h3 class="mb-4 text-lg font-semibold text-gray-900">返信</h3>
