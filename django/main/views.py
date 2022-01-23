@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, TemplateView, View, CreateView
+from django.views.generic import ListView, TemplateView, View, CreateView, UpdateView
 from .models import Question, QuestionImage, Response, Likes
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -19,7 +19,7 @@ from operator import and_
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from config.settings.base import DEFAULT_FROM_EMAIL
-from extra_views import CreateWithInlinesView, InlineFormSetFactory
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
 
 # Create your views here.
 User = get_user_model()
@@ -217,10 +217,15 @@ class DeleteUserCompleteView(LoginRequiredMixin, View):
 delete_user_complete = DeleteUserCompleteView.as_view()
 
 
-
 class QuestionImageInline(InlineFormSetFactory):
     model = QuestionImage
     fields = ['image']
+    factory_kwargs = {
+    'extra': 3,
+    'max_num': 3,
+    'can_order': False,
+    'can_delete': True
+    }
 
 # 質問する時の処理
 class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateWithInlinesView):
@@ -243,6 +248,7 @@ class PostQuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateWithInline
         messages.error(self.request, '質問の投稿に失敗しました。')
         return super().form_invalid(form)
 
+
 post_question = PostQuestionView.as_view()
 
 # 質問への返信の処理
@@ -259,6 +265,7 @@ class QuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         reply_form = NewReplyForm()
         context['question'] = question
         context['reply_form'] = reply_form
+        print(context)
         return context
 
     # 回答がついたことを通知
@@ -298,6 +305,35 @@ class QuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
 
 question = QuestionView.as_view()
+
+class EditQuestion(LoginRequiredMixin, UpdateWithInlinesView):
+    model = Question
+    form_class = NewQuestionForm
+    inlines = [QuestionImageInline]
+    template_name_suffix = '_edit_form'
+    pk_url_kwarg = 'id'
+
+    def get_success_url(self):
+        return reverse_lazy('main:question', kwargs={'id': self.kwargs['id']})
+
+    # def get_context_data(self, **kwargs):        
+    #     context = super().get_context_data(**kwargs)
+    #     inlines = context["inlines"]
+    #     for formset in inlines:
+    #         print(formset.management_form )
+    #         print()
+    #     return context
+
+    def form_valid(self, form):
+        messages.success(self.request, '質問を編集しました。')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, '質問の編集に失敗しました。')
+        return super().form_invalid(form)
+
+edit = EditQuestion.as_view()
+
 
 # 返信に対する返信の処理
 def replypage(request):
