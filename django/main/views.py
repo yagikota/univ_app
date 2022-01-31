@@ -265,6 +265,7 @@ class QuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         reply_form = NewReplyForm()
         context['question'] = question
         context['reply_form'] = reply_form
+        context['can_edit'] = True  if self.request.user == question.author else False
         print(context)
         return context
 
