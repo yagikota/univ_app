@@ -48,9 +48,11 @@
                         <div class="mt-2">
                             <p class="question-body">{{question.body}}</p>
                         </div>
-                        <div class="mt-2">
-                            <a class="question-body" href="{% url 'main:edit' question.id %}">編集</a>
-                        </div>
+                        {% if can_edit %}
+                            <div class="mt-2">
+                                <a class="question-body" href="{% url 'main:edit' question.id %}">編集</a>
+                            </div>
+                        {% endif %}
                     </div>
                     <!--START 画像挿入 -->
                     <div class="mt-4 snap-x w-full sm:flex">
