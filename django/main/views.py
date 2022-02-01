@@ -115,6 +115,23 @@ def likeview(request):
             'liked': liked,
             'count': question.likes.count(),
         }
+
+    if request.is_ajax():
+        return JsonResponse(context)
+
+def solved_or_not_view(request):
+    if request.method =="POST":
+        question = get_object_or_404(Question, pk=request.POST.get('question_id'))
+        if question.solved:
+            question.solved = False
+        else:
+            question.solved = True
+
+        # responseとして渡される
+        context={
+            'question_id': question.id,
+            'solved': question.solved,
+        }
         print(context)
 
     if request.is_ajax():
@@ -266,7 +283,6 @@ class QuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         context['question'] = question
         context['reply_form'] = reply_form
         context['can_edit'] = True  if self.request.user == question.author else False
-        print(context)
         return context
 
     # 回答がついたことを通知

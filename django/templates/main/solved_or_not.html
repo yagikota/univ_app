@@ -1,0 +1,10 @@
+<div class="flex flex-row-reverse">
+    <form action="{% url 'main:solved_or_not' question.id %}" method="POST">
+        {% csrf_token %}
+        {% if question.solved %}
+        <button id="solved_or_not" name="{{question.id}}" class="bg-white">解決済み</button>
+        {% else %}
+        <button id="solved_or_not" name="{{question.id}}" class="bg-white">未解決</button>
+        {% endif %}
+    </form>
+</div>
