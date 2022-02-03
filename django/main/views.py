@@ -119,20 +119,20 @@ def likeview(request):
     if request.is_ajax():
         return JsonResponse(context)
 
-def solved_or_not_view(request):
+def solved_or_not_view(request, id):
     if request.method =="POST":
-        question = get_object_or_404(Question, pk=request.POST.get('question_id'))
+        question = get_object_or_404(Question, pk=id)
         if question.solved:
             question.solved = False
         else:
             question.solved = True
+        question.save()
 
         # responseとして渡される
         context={
             'question_id': question.id,
             'solved': question.solved,
         }
-        print(context)
 
     if request.is_ajax():
         return JsonResponse(context)
