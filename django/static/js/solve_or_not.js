@@ -3,7 +3,7 @@ $(document).ready(function(event){
         event.preventDefault();
         $.ajax({
             type: 'POST', // HTTP通信の種類を指定
-            url: "{% url 'main:solved_or_not' question.id %}", // リクエストを送信する先のURLを指定。
+            url: "{% url 'main:solved_or_not'%}", // リクエストを送信する先のURLを指定。
             data: {
                 'question_id': $(this).attr('name'), // フォームデータを指定。 likeviewで処理される
                 'csrfmiddlewaretoken': '{{ csrf_token }}'},
