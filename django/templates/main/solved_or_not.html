@@ -2,9 +2,36 @@
     <form action="{% url 'main:solved_or_not' question.id %}" method="POST">
         {% csrf_token %}
         {% if question.solved %}
-        <button id="solved_or_not" name="{{question.id}}" class="bg-white">解決済み</button>
+        <ul class="filter-switch inline-flex items-center relative h-10 p-1 space-x-1 bg-gray-200 rounded-md font-semibold text-blue-600">
+            <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+              <div id="solved_or_not" name="{{question.id}}" class=" h-8 py-1 px-2 text-sm leading-6 text-blue-600 hover:text-gray-800 bg-white rounded shadow">
+                解決済
+              </div>
+              <div aria-hidden="true" class="filter-active"></div>
+            </li>
+            <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+                <button id="solved_or_not" name="{{question.id}}" class="h-8 py-1 px-2 text-sm leading-6 text-gray-600 hover:text-gray-800 ">
+                    未解決
+                </button>
+              </li>
+            </li>
+          </ul>
         {% else %}
-        <button id="solved_or_not" name="{{question.id}}" class="bg-white">未解決</button>
+        <ul class="filter-switch inline-flex items-center relative h-10 p-1 space-x-1 bg-gray-200 rounded-md font-semibold text-blue-600">
+            <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+                <button id="solved_or_not" name="{{question.id}}" class="h-8 py-1 px-2 text-sm leading-6 text-gray-600 hover:text-gray-800 ">
+                    解決済
+                </button>
+                <div aria-hidden="true" class="filter-active"></div>
+            </li>
+            <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+                <div id="solved_or_not" name="{{question.id}}" class=" h-8 py-1 px-2 text-sm leading-6 text-blue-600 hover:text-gray-800 bg-white rounded shadow">
+                未解決
+                </div>
+            </li>
+        </li>
+          </ul>
         {% endif %}
     </form>
 </div>
+
