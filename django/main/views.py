@@ -1,3 +1,4 @@
+from dataclasses import field
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, TemplateView, View, CreateView, UpdateView
 from .models import Question, QuestionImage, Response, Likes
@@ -119,23 +120,40 @@ def likeview(request):
     if request.is_ajax():
         return JsonResponse(context)
 
-def solved_or_not_view(request, id):
-    if request.method =="POST":
-        question = get_object_or_404(Question, pk=id)
+class UpdateSolvedORNotView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Question
+    fields = ['solved']
+    pk_url_kwarg = 'id'
+
+    def get_success_url(self):
+        return reverse_lazy('main:question', kwargs={'id': self.kwargs['id']})
+
+    def form_valid(self, form):
+        question = Question.objects.get(id=self.kwargs['id'])
         if question.solved:
-            question.solved = False
+            form.instance.solved = False
+            messages.success(self.request, '質問を未解決にしました。')
         else:
-            question.solved = True
-        question.save()
+            form.instance.solved = True
+            messages.success(self.request, '質問を解決済にしました。')
+        return super().form_valid(form)
 
-        # responseとして渡される
-        context={
-            'question_id': question.id,
-            'solved': question.solved,
-        }
 
-    if request.is_ajax():
-        return JsonResponse(context)
+update_solved_or_not = UpdateSolvedORNotView.as_view()
+
+# def solved_or_not_view(request, id):
+#     if request.method =="POST":
+#         question = get_object_or_404(Question, pk=request.POST.get('question_id'))
+#         print(question.solved)
+#         if question.solved:
+#             question.solved = False
+#             # messages.success(self.request, '質問を未解決にしました。')
+#         else:
+#             question.solved = True
+#             # messages.success(self.request, '質問を解決済にしました。')
+#         question.save()
+
+#         return reverse_lazy('main:question', kwargs={'id': id})
 
 class LikedQuestionListView(LoginRequiredMixin, PaginationMixin, ListView):
     template_name = 'main/mypage/liked_question_list.html'
@@ -277,6 +295,7 @@ class QuestionView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):        
         context = super().get_context_data(**kwargs)
         question = Question.objects.get(id=self.kwargs['id'])
+        print(question.solved, "questionview")
         question_images = QuestionImage.objects.filter(question=question)
         context['question_images'] = question_images
         reply_form = NewReplyForm()

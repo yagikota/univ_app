@@ -13,7 +13,7 @@ urlpatterns = [
     path('delete_complete/', views.delete_user_complete, name='delete_complete'),
     path('post_question/', views.post_question, name='post_question'),
     path('question/<int:id>/', views.question, name='question'),
-    path('question/<int:id>/solved_or_not/', views.solved_or_not_view, name='solved_or_not'),
+    path('question/<int:id>/solved_or_not/', views.update_solved_or_not, name='solved_or_not'),
     path('reply/', views.replypage, name='reply'), 
     path('question/<int:id>/edit/', views.edit, name='edit')
 ]
