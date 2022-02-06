@@ -15,9 +15,9 @@ class UrlsTests(TestCase):
         url = self.reverse_url('land_page')
         self.assertEqual(resolve(url).func, views.land_page)
 
-    def test_top_page_url_is_resolved(self):
-        url = self.reverse_url('top_page')
-        self.assertEqual(resolve(url).func, views.top_page)
+    # def test_top_page_url_is_resolved(self):
+    #     url = self.reverse_url('top_page')
+    #     self.assertEqual(resolve(url).func, views.top_page)
 
     def test_list_url_is_resolved(self):
         url = self.reverse_url('list')
@@ -43,13 +43,13 @@ class UrlsTests(TestCase):
         url = self.reverse_url('delete_confirm')
         self.assertEqual(resolve(url).func, views.delete_user_confirm)
 
-    def test_post_question_url_is_resolved(self):
-        url = self.reverse_url('post_question')
-        self.assertEqual(resolve(url).func, views.post_question_page)
+    # def test_post_question_url_is_resolved(self):
+    #     url = self.reverse_url('post_question')
+    #     self.assertEqual(resolve(url).func, views.post_question_page)
 
-    def test_question_url_is_resolved(self):
-        url = reverse('main:question', args=[1])
-        self.assertEqual(resolve(url).func, views.question_page)
+    # def test_question_url_is_resolved(self):
+    #     url = reverse('main:question', args=[1])
+    #     self.assertEqual(resolve(url).func, views.question_page)
 
     def test_reply_url_is_resolved(self):
         url = self.reverse_url('reply')
