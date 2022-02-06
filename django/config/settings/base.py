@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.mainConfig',
-    'bootstrap4',
     'widget_tweaks',
     'pure_pagination',
     # django-allauthを使用するのに必要
