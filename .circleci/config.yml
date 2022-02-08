@@ -10,7 +10,6 @@ executors:
 commands:
   build_and_test:
     steps:
-      - checkout
       - run:
           name: build-docker-compose
           command: docker-compose -f docker-compose.yml up -d --build
@@ -161,10 +160,10 @@ commands:
 jobs:
   test:
     executor: circleci_classic
-      steps:
-        - checkout
-        - build_and_test
-        - notify_slack_fail
+    steps:
+      - checkout
+      - build_and_test
+      - notify_slack_fail
     
     deploy:
       executor: circleci_classic
