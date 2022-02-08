@@ -50,8 +50,12 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
+            pwd
             ls -al
-            ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_HOST} "cd ~; git pull origin main; cd univ_app; docker-compose up -d"
+            git branch
+            chmod 731 .git
+            git branch
+            ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_HOST} "docker-compose up -d"
 
 workflows:
   version: 2
