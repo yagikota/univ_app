@@ -38,7 +38,7 @@ jobs:
   #     #     root: ~/univ_app
   #     #     paths:
   #     #       - .
-  
+
   conoha_deploy:
     machine:
       image: circleci/classic:edge
@@ -50,6 +50,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
+            ls -a
             ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_HOST} "cd ~; git pull origin main; cd univ_app; docker-compose up -d"
 
 workflows:
