@@ -2,13 +2,11 @@ version: 2.1
 orbs: 
   slack: circleci/slack@4.7.1
 
-executors:
-  circleci_classic:
+
+jobs:
+  build_and_test:
     docker:
       - image: circleci/classic:edge
-
-commands:
-  build_and_test:
     steps:
       - run:
           name: build-docker-compose
@@ -28,8 +26,9 @@ commands:
       #     root: ~/univ_app
       #     paths:
       #       - .
-
   conoha_deploy:
+    docker:
+      - image: circleci/classic:edge
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -39,147 +38,12 @@ commands:
           command: |
             ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_HOST} "cd ~; git pull; cd univ_app; docker-compose up -d"
 
-  notify_slack_pass:
-    steps:
-      - slack/notify:
-          event: pass
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":tada::tada::tada: *Success!*"
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Project:*\n${CIRCLE_PROJECT_REPONAME}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*When:*\n$(TZ=Asia/Tokyo date +'%Y/%m/%d %T')"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Job:*\n${CIRCLE_JOB}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Author:*\n${CIRCLE_USERNAME}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Branch:*\n${CIRCLE_BRANCH}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Tag:*\n${CIRCLE_TAG}"
-                    }
-                  ]
-                },
-                {
-                  "type": "actions",
-                  "elements": [
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "View Job"
-                      },
-                      "url": "${CIRCLE_BUILD_URL}"
-                    }
-                  ]
-                }
-              ]
-            }
-
-  notify_slack_fail:
-    steps:
-      - slack/notify:
-          event: fail
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":japanese_ogre::japanese_ogre::japanese_ogre: *Failed* :bangbang:"
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Project:*\n${CIRCLE_PROJECT_REPONAME}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*When:*\n$(TZ=Asia/Tokyo date +'%Y/%m/%d %T')"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Job:*\n${CIRCLE_JOB}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Author:*\n${CIRCLE_USERNAME}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Branch:*\n${CIRCLE_BRANCH}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Tag:*\n${CIRCLE_TAG}"
-                    }
-                  ]
-                },
-                {
-                  "type": "actions",
-                  "elements": [
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "View Job"
-                      },
-                      "url": "${CIRCLE_BUILD_URL}"
-                    }
-                  ]
-                }
-              ]
-            }
-
-jobs:
-  test:
-    executor: circleci_classic
-    steps:
-      - checkout
-      - build_and_test
-      - notify_slack_fail
-    
-    deploy:
-      executor: circleci_classic
-      steps:
-        - checkout
-        - conoha_deploy
-        - notify_slack_fail
-        - notify_slack_pass
-
-
 workflows:
   version: 2
   on_commit:
     jobs:
       # - build_and_test
-      - deploy:
+      - conoha_deploy:
           # requires:
           #   - build_and_test
           filters:
