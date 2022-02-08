@@ -52,7 +52,7 @@ jobs:
           command: |
             pwd
             ls -al
-            ssh ${SSH_USERNAME}@${SSH_HOST} "pwd; ls -al; git status"
+            ssh ${SSH_USERNAME}@${SSH_HOST} "pwd; ls -al; git clone origin main"
 
 workflows:
   version: 2
