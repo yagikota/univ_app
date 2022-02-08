@@ -31,11 +31,11 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - $FINGERPRINTS
+            - ${FINGERPRINTS}
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USERNAME@$SSH_HOST "cd ~; git pull origin main; docker-compose up -d"
+            ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_HOST} "cd ~; git pull origin main; docker-compose up -d"
 
 workflows:
   version: 2
