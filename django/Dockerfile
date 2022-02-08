@@ -18,6 +18,7 @@ COPY . .
 
 COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+RUN pipenv install pillow
 
 # FINAL #
 FROM python:3.9-alpine3.14

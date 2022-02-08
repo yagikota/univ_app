@@ -1,36 +1,33 @@
 version: 2.1
-orbs:
-  python: circleci/python@1.5.0
-  # heroku: circleci/heroku@1.2.6
+
 jobs:
-  build_and_test:
-    docker:
-      - image: cimg/python:3.10.1
-      #   environment:
-      #     DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
-      # - image: circleci/postgres:9.6.2
-      #   environment:
-      #     POSTGRES_USER: root
-      #     POSTGRES_DB: circle_test
-    steps:
-      - checkout
-      - python/install-packages:
-          pkg-manager: pipenv
-      - run:
-          name: Run tests
-          command: pipenv run python manage.py test
-      - store_test_results:
-          path: test-results
-      - store_artifacts:
-          path: test-results
-          destination: tr1
-      - persist_to_workspace:
-          root: ~/univ_app
-          paths:
-            - .
+  # build_and_test:
+  #   machine:
+  #     image: circleci/classic:edge
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: build-docker-compose
+  #         command: docker-compose -f docker-compose.yml up -d --build
+  #     - run:
+  #         name: run-test
+  #         command: docker-compose exec web python3 manage.py test
+  #     - run:
+  #         name: down-docker-compose
+  #         command: docker-compose -f docker-compose.yml down
+  #     # - store_test_results:
+  #     #     path: test-results
+  #     # - store_artifacts:
+  #     #     path: test-results
+  #     #     destination: tr1
+  #     # - persist_to_workspace:
+  #     #     root: ~/univ_app
+  #     #     paths:
+  #     #       - .
+
   conoha_deploy:
     machine:
-      enabled: true
+      image: circleci/classic:edge
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -38,27 +35,19 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USERNAME@$SSH_HOST "cd ~/app; git pull origin main; docker-compose up -d"
+            ssh $SSH_USERNAME@$SSH_HOST "cd ~; git pull origin main; docker-compose up -d"
 
 workflows:
   version: 2
   on_commit:
     jobs:
-      - build_and_test
+      # - build_and_test
       - conoha_deploy:
-          requires:
-            - build_and_test
+          # requires:
+          #   - build_and_test
           filters:
             branches:
               only: main
 
-  # nightly:
-  #   triggers:
-  #     - schedule:
-  #         cron: "0 0 * * *"
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #   jobs:
-  #     - build_and_test
+
+# https://qiita.com/Kesin11/items/47079bc7f659e71b694c
