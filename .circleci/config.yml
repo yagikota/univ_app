@@ -52,9 +52,6 @@ jobs:
           command: |
             pwd
             ls -al
-            git branch
-            chmod 731 .git
-            git branch
             ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_HOST} "cd ~/myapp/; git pull origin main:main docker-compose up -d"
 
 workflows:
