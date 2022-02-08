@@ -2,33 +2,44 @@ version: 2.1
 orbs: 
   slack: circleci/slack@4.7.1
 
+commands:
+  install_docker_compose:
+    steps:
+      - run:
+          name: Install Docker Compose
+          environment:
+            COMPOSE_VERSION: '1.29.2'
+          command: |
+            curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
 
 jobs:
-  build_and_test:
-    docker:
-      - image: circleci/classic:edge
-    steps:
-      - checkout
-      - run:
-          name: build-docker-compose
-          command: docker-compose -f docker-compose.yml up -d --build
-      - run:
-          name: run-test
-          command: docker-compose exec web python3 manage.py test
-      - run:
-          name: down-docker-compose
-          command: docker-compose -f docker-compose.yml down
-      # - store_test_results:
-      #     path: test-results
-      # - store_artifacts:
-      #     path: test-results
-      #     destination: tr1
-      # - persist_to_workspace:
-      #     root: ~/univ_app
-      #     paths:
-      #       - .
+  # build_and_test:
+  #   docker:
+  #     - image: circleci/classic:edge
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: build-docker-compose
+  #         command: docker-compose -f docker-compose.yml up -d --build
+  #     - run:
+  #         name: run-test
+  #         command: docker-compose exec web python3 manage.py test
+  #     - run:
+  #         name: down-docker-compose
+  #         command: docker-compose -f docker-compose.yml down
+  #     # - store_test_results:
+  #     #     path: test-results
+  #     # - store_artifacts:
+  #     #     path: test-results
+  #     #     destination: tr1
+  #     # - persist_to_workspace:
+  #     #     root: ~/univ_app
+  #     #     paths:
+  #     #       - .
   conoha_deploy:
-    docker:
+    machine:
       - image: circleci/classic:edge
     steps:
       - checkout
@@ -54,5 +65,3 @@ workflows:
 
 
 # https://qiita.com/Kesin11/items/47079bc7f659e71b694c
-
-
