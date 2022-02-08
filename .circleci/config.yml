@@ -52,7 +52,7 @@ jobs:
           command: |
             pwd
             ls -al
-            ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_HOST} -p 22 "pwd; ls -al; git status"
+            ssh ${SSH_USERNAME}@${SSH_HOST} "pwd; ls -al; git status"
 
 workflows:
   version: 2
