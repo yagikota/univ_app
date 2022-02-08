@@ -8,6 +8,7 @@ jobs:
     docker:
       - image: circleci/classic:edge
     steps:
+      - checkout
       - run:
           name: build-docker-compose
           command: docker-compose -f docker-compose.yml up -d --build
@@ -30,6 +31,7 @@ jobs:
     docker:
       - image: circleci/classic:edge
     steps:
+      - checkout
       - add_ssh_keys:
           fingerprints:
             - ${FINGERPRINTS}
