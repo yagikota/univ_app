@@ -28,8 +28,6 @@ jobs:
           root: ~/univ_app
           paths:
             - .
-
-
   conoha_deploy:
     machine:
       enabled: true
