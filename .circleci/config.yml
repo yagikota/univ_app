@@ -52,7 +52,7 @@ jobs:
           command: |
             pwd
             ls -al
-            ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_HOST} "cd ~/myapp/; git pull origin main:main docker-compose up -d"
+            ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_HOST} "pwd; ls -al"
 
 workflows:
   version: 2
