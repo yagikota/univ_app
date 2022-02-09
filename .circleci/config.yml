@@ -43,16 +43,16 @@ jobs:
     machine:
       image: circleci/classic:edge
     steps:
-      # - checkout
+      - checkout
       - add_ssh_keys:
           fingerprints:
-            - ${FINGERPRINTS}
+            - $FINGERPRINTS
       - run:
           name: Deploy Over SSH
           command: |
             pwd
             ls -al
-            ssh ${SSH_USERNAME}@${SSH_HOST} "pwd; ls -al; git clone origin main"
+            ssh $SSH_USERNAME@$SSH_HOST "./deploy.sh"
 
 workflows:
   version: 2
