@@ -66,5 +66,4 @@ workflows:
             branches:
               only: main
 
-
 # https://qiita.com/Kesin11/items/47079bc7f659e71b694c
