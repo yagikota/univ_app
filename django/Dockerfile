@@ -13,12 +13,12 @@ RUN apk update \
     && apk add rust cargo
 
 RUN pip install --upgrade pip
+RUN pip install Pillow
 RUN pip install flake8
 COPY . .
 
 COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
-RUN pipenv install pillow
 
 # FINAL #
 FROM python:3.9-alpine3.14
@@ -44,6 +44,7 @@ COPY ./entrypoint.sh $APP_HOME
 COPY . $APP_HOME
 
 RUN chown -R app:app $APP_HOME
+
 
 USER app
 

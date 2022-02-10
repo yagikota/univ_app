@@ -10,8 +10,9 @@ STATIC_ROOT = "/var/www/{}/static".format(PROJECT_NAME)
 MEDIA_ROOT = "/var/www/{}/media".format(PROJECT_NAME)
 
 SECRET_KEY = env('SECRET_KEY')
-# ALLOWED_HOSTS = env('ALLOWED_HOSTS')
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+
+# ALLOWED_HOSTS = ['*']
 
 # LOGGING = {
 #     'version': 1,

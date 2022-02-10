@@ -4,11 +4,7 @@ services:
   web:
     build: ./django
     # command: python manage.py runserver 0.0.0.0:8000
-    command: >
-      sh -c 
-      "gunicorn config.wsgi:application --bind 0.0.0.0:8000 &&
-      python3 manage.py migrate &&
-      python3 manage.py collectstatic"
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
