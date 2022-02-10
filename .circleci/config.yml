@@ -60,6 +60,7 @@ jobs:
             ls -al
             ssh $SSH_USERNAME@$SSH_HOST "./deploy.sh"
 
+
 workflows:
   version: 2
   on_commit:
