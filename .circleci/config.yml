@@ -47,19 +47,12 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - $FINGERPRINTS
-      # - run:
-      #     name: Decode env file for docker
-      #     command: echo $DOCKER_ENV_FILE | base64 --decode > .env
-      # - run:
-      #     name: Decode env file fot django setting
-      #     command: echo $DJANGO_SETTING_ENV_FILE | base64 --decode > ./django/.env
       - run:
           name: Deploy Over SSH
           command: |
             pwd
             ls -al
             ssh $SSH_USERNAME@$SSH_HOST "./deploy.sh"
-
 
 workflows:
   version: 2
